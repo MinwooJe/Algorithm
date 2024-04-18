@@ -1,7 +1,6 @@
 def solution(strArr):
-    cnt = [0 for _ in range(31)]
+    d = {}
     for s in strArr:
-        cnt[len(s)] += 1
-    answer = max(cnt)
-    
+        d[len(s)] = d.get(len(s), 0) + 1
+    answer = max(d.values())
     return answer
