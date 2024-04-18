@@ -1,10 +1,7 @@
 def solution(strArr):
-    answer = 0
-    cntDict = dict()
+    cnt = [0 for _ in range(31)]
     for s in strArr:
-        if len(s) in cntDict.keys():
-            cntDict[len(s)] += 1
-        else:
-            cntDict[len(s)] = 1
-    answer = max(cntDict.values()) 
+        cnt[len(s)] += 1
+    answer = max(cnt)
+    
     return answer
