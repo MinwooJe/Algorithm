@@ -1,3 +1,4 @@
 def solution(ineq, eq, n, m):
-    answer = int(eval('n' + ineq + eq.replace('!', '') + 'm'))
+    answer = int(eval(str(n) + ineq + eq.replace('!', '') + str(m)))
     return answer
+
