@@ -1,8 +1,7 @@
 def solution(my_strings, parts):
-    answer = ''
-    # for i, (s, e) in enumerate(parts):
-    #     answer += my_strings[i][s:e+1]
-    
-    for string, (s, e) in zip(my_strings, parts):
-        answer += string[s:e+1]
+    answer = list()
+    for idx, part in enumerate(parts):
+        s, e = part
+        answer += list(my_strings[idx][s:e+1])
+    answer = ''.join(answer)
     return answer
