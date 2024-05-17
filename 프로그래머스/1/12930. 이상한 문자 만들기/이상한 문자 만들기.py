@@ -1,13 +1,14 @@
 def solution(s):
-    s = s.split(' ')
-    new_string = ''
-    for i in range(len(s)):
-        for idx, value in enumerate(s[i]):
-            if idx % 2 == 0:
-                new_string += value.upper()
+    str_list = s.split(' ')
+    temp_word = []
+    answer = []
+    for word in str_list:
+        for i in range(len(word)):
+            if i % 2 == 0:
+                temp_word.append(word[i].upper())
             else:
-                new_string += value.lower()
-        s[i] = new_string
-        new_string = ''
-    answer = ' '.join(s)
+                temp_word.append(word[i].lower())
+        answer.append(''.join(temp_word))
+        temp_word = []
+    answer = ' '.join(answer)
     return answer
