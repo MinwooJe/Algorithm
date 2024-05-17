@@ -1,12 +1,11 @@
 def solution(s):
-    answer = [0 for _ in range(len(s))]
+    answer = []
+    char_dict = {}   # 가장 최근에 나온 문자의 인덱스를 저장하는 딕셔너리
+    
     for i in range(len(s)):
-        for j in range(i):
-            if s[i] == s[j]:
-                answer[i] = i - j
-    print(answer)
-    for i in range(len(answer)):
-        if answer[i] == 0:
-            answer[i] = -1
-            
+        if s[i] not in char_dict:
+            answer.append(-1)
+        else:
+            answer.append(i - char_dict[s[i]])
+        char_dict[s[i]] = i
     return answer
