@@ -3,13 +3,7 @@ def solution(food):
     temp = ''
     
     for i in range(1, len(food)):
-        if food[i] % 2 != 0:
-            food[i] -= 1
-            food[i] //= 2
-        else:
-            food[i] //= 2
-    
-    for i in range(1, len(food)):
+        food[i] //= 2        # 어차피 몫을 구하니 홀수도 상관 없음
         temp += str(i) * food[i]
         
     answer = temp + '0' + temp[::-1]
