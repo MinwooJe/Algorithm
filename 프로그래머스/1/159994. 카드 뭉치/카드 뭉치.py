@@ -1,13 +1,12 @@
 def solution(cards1, cards2, goal):
-    cards1_idx = 0
-    cards2_idx = 0
     answer = 'Yes'
+    p1, p2 = 0, 0   # cards1,2의 각 인덱스를 가리키는 포인터
     
-    for s in goal:
-        if cards1_idx < len(cards1) and s == cards1[cards1_idx]:
-            cards1_idx += 1
-        elif cards2_idx < len(cards2) and s == cards2[cards2_idx]:
-            cards2_idx += 1
+    for i in range(len(goal)):
+        if p1 < len(cards1) and cards1[p1] == goal[i]:
+            p1 += 1
+        elif p2 < len(cards2) and cards2[p2] == goal[i]:
+            p2 += 1
         else:
             answer = 'No'
             break
