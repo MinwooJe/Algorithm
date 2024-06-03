@@ -1,21 +1,23 @@
 def solution(keymap, targets):
+    key_hash = {}
     answer = []
-    hash = {}
-    
+    # 딕셔너리 초기화
     for key in keymap:
-        for i, char in enumerate(key):
-            if char in hash:
-                hash[char] = min(i + 1, hash[char])
+        for idx, c in enumerate(key):
+            if c in key_hash:
+                key_hash[c] = min(idx+1, key_hash[c])
             else:
-                hash[char] = i + 1
-                
-    for i, target in enumerate(targets):
-        ret = 0
-        for char in target:
-            if char not in hash:
-                ret = -1
-                break
-            ret += hash[char]
-        answer.append(ret)
+                key_hash[c] = idx + 1
     
+    # targets 만들기
+    for target in targets:
+        count = 0
+        for c in target:
+            if c not in key_hash:
+                count = -1
+                break
+            else:
+                count += key_hash[c]
+        answer.append(count)
+        
     return answer
