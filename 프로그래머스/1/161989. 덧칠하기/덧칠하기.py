@@ -6,5 +6,4 @@ def solution(n, m, section):
         if start + (m-1) < i:
             count += 1
             start = i
-            
     return count
