@@ -1,24 +1,23 @@
 def solution(dartResult):
-    score = []
-    dartResult = dartResult.replace('10', 't')
+    result = []
+    dartResult = dartResult.replace('10', 'x')
     for i in dartResult:
-        if i.isnumeric():
-            score.append(int(i))
-        elif i == "t":
-            score.append(10)
-        elif i == "S":
-            score[-1] **= 1
-        elif i == "D":
-            score[-1] **= 2
-        elif i == "T":
-            score[-1] **= 3
-        elif i == "*":
-            if len(score) > 1:
-                score[-1] *= 2
-                score[-2] *= 2
-            else:
-                score[-1] *= 2
-        elif i == "#":
-            score[-1] *= -1
-    answer = sum(score)
+        if i.isdigit():
+            result.append(int(i))
+        if i == 'x':
+            result.append(10)
+        if i == 'S':
+            continue
+        if i == 'D':
+            result[-1] **=  2
+        if i == 'T':
+            result[-1] **= 3
+        if i == '*':
+            result[-1] *= 2
+            if len(result) > 1:
+                result[-2] *= 2
+        if i == '#':
+            result[-1] *= -1
+        print(result)
+    answer = sum(result)
     return answer
