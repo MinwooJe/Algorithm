@@ -1,13 +1,13 @@
 def solution(lottos, win_nums):
-    rank = [6, 6, 5, 4, 3, 2, 1]
-    count = 0
-    zero_count = lottos.count(0)
+    min_count, max_count = 0, 0
+    rank_dict = {6:1, 5:2, 4:3, 3:4 , 2:5, 1:6, 0:6}    # 맞춘 개수 : 등수
     
     for i in lottos:
         if i in win_nums:
-            count += 1
-            
-    min_rank = rank[count]
-    max_rank = rank[zero_count + count]
-    
-    return [max_rank, min_rank]
+            min_count += 1
+    max_count = min_count
+    max_count += lottos.count(0)
+    print(max_count, min_count)
+    answer = [rank_dict[max_count], rank_dict[min_count]]
+
+    return answer
