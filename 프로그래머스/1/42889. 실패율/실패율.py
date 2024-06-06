@@ -1,21 +1,22 @@
 def solution(N, stages):
-    remain_count = {x:0 for x in range(1, N+2)}
-    fail_rate = {x:0 for x in range(1, N+1)}
+    answer = 0
+    challenger = [0] * (N+1)    # 분자
+    fail_rates = {}
     
-    # 각 스테이지에 머물러 있는 플레이어 수 계산
-    for stage in stages:
-        remain_count[stage] += 1
-        
-    total = len(stages)
-    
-    for i in range(1, N+1):
-        if total != 0:
-            fail_rate[i] = remain_count[i] / total
-            total -= remain_count[i]
+    for i in range(1, N+2):
+        challenger[i-1] = stages.count(i)
+    #
+    print(challenger)
+    #
+    reached = len(stages)
+    for i in range(len(challenger)-1):
+        if challenger[i] == 0:
+            fail_rate = 0
         else:
-            fail_rate[i] = 0
+            fail_rate = challenger[i] / reached
+            reached -= challenger[i]
+        fail_rates[i+1] = fail_rate
     
-    answer_dict = dict(sorted(fail_rate.items(), key=lambda item:item[1], reverse=True))
-
-    answer = [stage for stage in answer_dict.keys()]
+    answer = dict(sorted(fail_rates.items(), key=lambda x: x[1], reverse=True))
+    answer = [stage for stage in answer.keys()]
     return answer
