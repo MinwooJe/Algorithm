@@ -1,13 +1,11 @@
 def solution(s, skip, index):
-    answer = ''
-    s, skip = list(s), list(skip)
-    crypto_list = [chr(i) for i in range(97, 123)]
+    alphabet = []
+    for i in range(26):
+        alphabet.append(chr(97+i))
     for i in skip:
-        if i in crypto_list:
-            crypto_list.remove(i)
-            
+        alphabet.remove(i)
+    s = list(s)
     for i in range(len(s)):
-        idx = (crypto_list.index(s[i]) + index) % len(crypto_list)
-        s[i] = crypto_list[idx]
-    
+        idx = alphabet.index(s[i])
+        s[i] = alphabet[(idx+index) % len(alphabet)]
     return ''.join(s)
