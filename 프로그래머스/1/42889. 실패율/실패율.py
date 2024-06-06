@@ -1,22 +1,14 @@
 def solution(N, stages):
-    answer = 0
-    challenger = [0] * (N+1)    # 분자
+    reached = len(stages)   # 해당 스테이지에 도달한 사람(분모)
     fail_rates = {}
     
-    for i in range(1, N+2):
-        challenger[i-1] = stages.count(i)
-    #
-    print(challenger)
-    #
-    reached = len(stages)
-    for i in range(len(challenger)-1):
-        if challenger[i] == 0:
-            fail_rate = 0
+    for stage in range(1, N+1):
+        challenger = stages.count(stage)    # 해당 스테이지에 도전 중인 사람(분자)
+        if reached == 0:        # 해당 스테이지에 도달한 사람이 없을 경우
+            fail_rates[stage] = 0
         else:
-            fail_rate = challenger[i] / reached
-            reached -= challenger[i]
-        fail_rates[i+1] = fail_rate
-    
-    answer = dict(sorted(fail_rates.items(), key=lambda x: x[1], reverse=True))
-    answer = [stage for stage in answer.keys()]
+            fail_rates[stage] = challenger / reached
+            reached -= challenger
+
+    answer = sorted(fail_rates, key=lambda x: fail_rates[x], reverse=True)
     return answer
