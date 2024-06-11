@@ -4,7 +4,5 @@ def solution(price, money, count):
         
     if money >= 0:
         return 0
-    
-    answer = abs(money)
-    
-    return answer
+    else:
+        return abs(money)
