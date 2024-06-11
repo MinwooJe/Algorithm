@@ -1,11 +1,9 @@
 def solution(food):
+    half = ''
     answer = ''
-    temp = ''
     
     for i in range(1, len(food)):
-        food[i] //= 2        # 어차피 몫을 구하니 홀수도 상관 없음
-        temp += str(i) * food[i]
-        
-    answer = temp + '0' + temp[::-1]
+        half += str(i) * (food[i]//2)
     
+    answer = half + '0' + half[::-1]
     return answer
