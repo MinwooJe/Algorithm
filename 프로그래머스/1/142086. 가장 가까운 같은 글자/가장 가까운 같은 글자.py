@@ -1,15 +1,11 @@
 def solution(s):
-    # 가장 최근에 나온 문자의 인덱스 저장
-    char_dict = {}
-    answer = [0] * len(s) 
-    
-    for idx, value in enumerate(s):
-        if value in char_dict:
-            answer[idx] = idx - char_dict[value]
+    char_hash = {}
+    answer = []
+    for i in range(len(s)):
+        if s[i] in char_hash:
+            answer.append(i - char_hash[s[i]])
         else:
-            answer[idx] = -1
-            
-        char_dict[value] = idx
-    
+            answer.append(-1)
+        char_hash[s[i]] = i
     return answer
-        
+    
