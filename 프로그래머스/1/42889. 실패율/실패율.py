@@ -1,14 +1,16 @@
 def solution(N, stages):
-    reached = len(stages)   # 해당 스테이지에 도달한 사람(분모)
-    fail_rates = {}
+    challengers = {}
+    fail_hash = {}
+    for i in range(1, N+2):
+        challengers[i] = stages.count(i)
     
-    for stage in range(1, N+1):
-        challenger = stages.count(stage)    # 해당 스테이지에 도전 중인 사람(분자)
-        if reached == 0:        # 해당 스테이지에 도달한 사람이 없을 경우
-            fail_rates[stage] = 0
+    reached_count = len(stages)
+    for i in range(1, N+1):
+        if reached_count > 0:
+            fail_rate = challengers[i] / reached_count
         else:
-            fail_rates[stage] = challenger / reached
-            reached -= challenger
-
-    answer = sorted(fail_rates, key=lambda x: fail_rates[x], reverse=True)
+            fail_rate = 0
+        fail_hash[i] = fail_rate
+        reached_count -= challengers[i]
+    answer = sorted(fail_hash, key=lambda x: fail_hash[x], reverse=True)
     return answer
