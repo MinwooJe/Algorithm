@@ -1,20 +1,25 @@
 def solution(board, moves):
-    # 뽑은 인형들 바구니에 넝ㅎ기
     basket = []
-    answer = 0
-
-    for i in moves:
-        j = 0
-        while j < len(board) - 1 and board[j][i-1] == 0:   # 한 칸씩 밑으로 내려가기
-            j += 1
-        if board[j][i-1] != 0:             # 인형이 없는 곳에 크레인 작동시킬 경우 예외 처리
-            basket.append(board[j][i-1])
-            board[j][i-1] = 0
+    count = 0
+    # move의 원소-1은 board의 열을 인덱스 의미.
+    # 해당 열로 가서 while 원소 == 0: 행++
+    for col_idx in moves:
+        col_idx -= 1
+        row_idx = 0
+        while row_idx < len(board)-1 and board[row_idx][col_idx] == 0:
+            row_idx += 1
         
-        if len(basket) >= 2:
+        if board[row_idx][col_idx] != 0:
+            basket.append(board[row_idx][col_idx])
+            board[row_idx][col_idx] = 0
+        
+        if len(basket) > 1:
             if basket[-1] == basket[-2]:
                 basket.pop()
                 basket.pop()
-                answer += 2
-    
-    return answer
+                count += 2
+        
+    return count
+    # 만약 해당 열이 모두 0이라면 인덱스가 len(board)를 넘음. -> 예외처리 해주고
+    # 아니면 해당 원소 스택에 넣고 board에서 0으로 바꾸기
+    # 스택의 맨 마지막 두 원소가 같다면 pop 두 번
