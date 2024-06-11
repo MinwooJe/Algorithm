@@ -1,12 +1,13 @@
 def solution(name, yearning, photo):
+    yearning_hash = {}
     answer = []
-    score_dict = {n : y for n, y in zip(name, yearning)}
+    for k, v in zip(name, yearning):
+        yearning_hash[k] = v
     
-    for pho in photo:
-        sum = 0
-        for n in pho:
-            if n in score_dict:
-                sum += score_dict[n]
-        answer.append(sum)
-        
+    for p in photo:
+        score = 0
+        for i in p:
+            if i in yearning_hash:
+                score += yearning_hash[i]
+        answer.append(score)
     return answer
