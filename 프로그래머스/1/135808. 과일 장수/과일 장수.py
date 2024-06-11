@@ -1,7 +1,9 @@
 def solution(k, m, score):
-    score.sort(reverse=True)
     answer = 0
-    n = len(score) // m
-    for i in range(n):
-        answer += min(score[m*i:m*i+m]) * m
+    score.sort(reverse=True)
+
+    for i in range(len(score)//m):
+        box = score[i*m:i*m+m]
+        answer += m * min(box)
+        
     return answer
