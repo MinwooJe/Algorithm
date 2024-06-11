@@ -1,7 +1,11 @@
 def solution(d, budget):
     d.sort()
     i = 0
-    while i < len(d) and budget - d[i] >= 0:
-        budget -= d[i]
-        i += 1
-    return i
+    answer = 0
+    
+    for b in d:
+        if budget - b >= 0:
+            budget -= b
+            answer += 1
+    
+    return answer
