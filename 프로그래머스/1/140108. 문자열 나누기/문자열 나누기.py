@@ -1,13 +1,15 @@
 def solution(s):
-    x = s[0]
-    count = 0
+    answer = 0
     same, not_same = 0, 0
-    for i in s:
+    for c in s:
         if same == not_same:
-            count += 1
-            x = i
-        if i == x:
+            answer += 1
+            same, not_same = 0, 0
+            x = c
+            
+        if x == c:
             same += 1
-        else:
+        elif x != c:
             not_same += 1
-    return count
+            
+    return answer
