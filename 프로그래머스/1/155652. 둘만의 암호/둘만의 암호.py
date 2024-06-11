@@ -1,11 +1,12 @@
 def solution(s, skip, index):
-    alphabet = []
-    for i in range(26):
-        alphabet.append(chr(97+i))
-    for i in skip:
-        alphabet.remove(i)
-    s = list(s)
-    for i in range(len(s)):
-        idx = alphabet.index(s[i])
-        s[i] = alphabet[(idx+index) % len(alphabet)]
-    return ''.join(s)
+    answer = ''
+    char_list = [chr(i+97) for i in range(26)]
+    for c in skip:
+        char_list.remove(c)
+    
+    for c in s:
+        idx = (char_list.index(c) + index) % len(char_list)
+        answer += char_list[idx]
+        print('c의 인덱스, idx', char_list.index(c), idx)
+
+    return answer
