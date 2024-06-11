@@ -1,11 +1,13 @@
 def solution(board, h, w):
-    neighbor = []
+    target = board[h][w]
+    answer = 0
+    
     for i in range(-1, 2, 2):
         if 0 <= h+i < len(board):
-            neighbor.append(board[h+i][w])
+            if target == board[h+i][w]:
+                answer += 1
         if 0 <= w+i < len(board):
-            neighbor.append(board[h][w+i])
-    
-    answer = neighbor.count(board[h][w])
-    
+            if target == board[h][w+i]:
+                answer += 1
+        
     return answer
