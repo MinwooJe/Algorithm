@@ -1,40 +1,38 @@
 def solution(park, routes):
-    # 시작지점 찾기
-    park_height, park_width = len(park), len(park[0])
-    starting_point = []
-    for n_row, row in enumerate(park):
-        for n_col, col in enumerate(row):
-            if col == 'S':
-                starting_point = [n_row, n_col]
-    
-    temp_loc = starting_point   # 임시 위치를 나타내는 포인터
+    # 시작 지점 찾기
+    for p in park:
+        if 'S' in p:
+            start_col = p.index('S')
+            start_row = park.index(p)
+    location = [start_row, start_col]
+    print('시작위치:', location)
 
-    for route in routes:
-        before_loc = temp_loc[:]
-        op, n = route.split()
-        n = int(n)
-        for i in range(n):
-            temp_loc = move(temp_loc, op)   # 해당 방향으로 한 칸 이동
-            print(temp_loc)
-            if (temp_loc[0] < 0 or temp_loc[0] >= park_height 
-            or temp_loc[1] < 0 or temp_loc[1] >= park_width
-            or park[temp_loc[0]][temp_loc[1]] == 'X'):
-                temp_loc = before_loc
+    # 이동하기
+    for r in routes:
+        direction, count = r.split()[0], int(r.split()[1])
+        original = location[:]
+        
+        for _ in range(count):
+            location = move(location, direction)
+            if (
+                location[0] < 0 or location[0] >= len(park)
+                or  location[1] < 0 or location[1] >= len(park[1])
+                or park[location[0]][location[1]] == 'X'
+            ):
+                location = original
                 break
-            else:
-                starting_point = temp_loc
-        print('op 후 위치 : ', temp_loc)
-        print('===') 
-    return temp_loc
+                
+    return location
 
-def move(location, op):
-    if op == 'E':
-        location[1] += 1
-    elif op == 'W':
-        location[1] -= 1
-    elif op == 'S':
-        location[0] += 1
-    elif op == 'N':
+
+def move(location, direction):
+    if direction == 'N':
         location[0] -= 1
-    
+    elif direction == 'S':
+        location[0] += 1
+    elif direction == 'W':
+        location[1] -= 1
+    elif direction == 'E':
+        location[1] += 1
+
     return location
