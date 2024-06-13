@@ -1,19 +1,15 @@
 def solution(participant, completion):
-    par_hash = {}
-    com_hash = {}
-    
-    for i in completion:
-        if i in com_hash:
-            com_hash[i] += 1
-        else:
-            com_hash[i] = 1
+    completion_hash = {}
 
+    for i in completion:
+        if i in completion_hash:
+            completion_hash[i] += 1
+        else:
+            completion_hash[i] = 1
+    
     for i in participant:
-        if i not in com_hash:
+        if i in completion_hash:
+            completion_hash[i] -= 1
+        
+        if i not in completion_hash or completion_hash[i] < 0:
             return i
-        com_hash[i] -= 1
-        if com_hash[i] < 0:
-            return i
-            
-    
-    
