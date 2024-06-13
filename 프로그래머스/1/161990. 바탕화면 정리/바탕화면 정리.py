@@ -1,12 +1,13 @@
 def solution(wallpaper):
-    answer = [] 
-    row, col = [], []
-    for i in range(len(wallpaper)):
-        for j in range(len(wallpaper[i])):
-            if wallpaper[i][j] == '#':
-                col.append(j)
-                row.append(i)
-
-    answer = [min(row), min(col), max(row)+1, max(col)+1]
+    lux, luy, rdx, rdy = 100, 100, 0, 0
+    for n_row, row in enumerate(wallpaper):
+        for n_col, r in enumerate(row):
+            if r == '#':
+                lux = min(lux, n_row)
+                rdx = max(rdx, n_row+1)
+                luy = min(luy, n_col)
+                rdy = max(rdy, n_col+1)
+    
+    answer = [lux, luy, rdx, rdy]
+    
     return answer
- 
