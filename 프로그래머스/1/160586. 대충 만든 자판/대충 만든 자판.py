@@ -1,12 +1,13 @@
 def solution(keymap, targets):
-    key_hash = {}
     answer = []
+    key_hash = {}
     for key in keymap:
-        for i, v in enumerate(key):
-            if v in key_hash:
-                key_hash[v] = min(i+1, key_hash[v])
+        for idx, k in enumerate(key):
+            idx += 1
+            if k not in key_hash:
+                key_hash[k] = idx
             else:
-                key_hash[v] = i+1
+                key_hash[k] = min(idx, key_hash[k])
     
     for target in targets:
         count = 0
@@ -16,5 +17,7 @@ def solution(keymap, targets):
             else:
                 count = -1
                 break
+                
         answer.append(count)
+    
     return answer
