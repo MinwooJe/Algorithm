@@ -1,21 +1,21 @@
 def solution(number, limit, power):
-    atk = []
-    for i in range(1, number+1):
-        atk.append(count_divisor(i))
+    knight = []
     
-    for i in range(len(atk)):
-        if atk[i] > limit:
-            atk[i] = power
-            
-    return sum(atk)
+    for i in range(1, number+1):
+        if get_divisor_count(i) > limit:
+            knight.append(power)
+        else:
+            knight.append(get_divisor_count(i))
+    
+    return sum(knight)
         
-
-def count_divisor(n):
-    end = int(n**0.5) + 1
+        
+def get_divisor_count(n):
+    end = int(n**0.5)
     count = 0
-    for i in range(1, end):
+    for i in range(1, end+1):
         if n % i == 0:
-            if n == i*i:
+            if i**2 == n:
                 count += 1
             else:
                 count += 2
