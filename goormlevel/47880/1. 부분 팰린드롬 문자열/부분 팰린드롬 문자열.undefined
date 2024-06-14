@@ -1,0 +1,13 @@
+s = input()
+sub_string_list = []
+count = set()
+for i in range(len(s)):
+	for j in range(len(s)):
+		sub_string_list.append(s[j:j+i+1])
+		
+for sub_string in sub_string_list:
+	if sub_string == sub_string[::-1]:
+		count.add(len(sub_string))
+
+if answer
+print(answer)
