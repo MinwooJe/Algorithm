@@ -1,38 +1,34 @@
 def solution(park, routes):
-    # 시작 지점 찾기
-    for p in park:
-        if 'S' in p:
-            start_col = p.index('S')
-            start_row = park.index(p)
-    location = [start_row, start_col]
-    print('시작위치:', location)
-
-    # 이동하기
-    for r in routes:
-        direction, count = r.split()[0], int(r.split()[1])
-        original = location[:]
+    # 시작 위치 찾기
+    start = []
+    for row_n, row in enumerate(park):
+        if 'S' in row:
+            col_n = row.index('S')
+            start = [row_n, col_n]
+    print('시작 위치 : ', start)
+    for route in routes:
+        op, n = route.split()
+        temp_location = start[:]        # 이동했을 때의 포인터
         
-        for _ in range(count):
-            location = move(location, direction)
-            if (
-                location[0] < 0 or location[0] >= len(park)
-                or  location[1] < 0 or location[1] >= len(park[1])
-                or park[location[0]][location[1]] == 'X'
-            ):
-                location = original
-                break
-                
-    return location
+        for _ in range(int(n)):
+            temp_location = move(temp_location, op)
+            if (temp_location[0] < 0 or temp_location[0] >= len(park)
+                    or temp_location[1] < 0 or temp_location[1] >= len(park[0])
+                    or park[temp_location[0]][temp_location[1]] == 'X'
+                   ):
+                    temp_location = start[:]
+                    break
+        start = temp_location[:]
+            
+    return start
 
-
-def move(location, direction):
-    if direction == 'N':
-        location[0] -= 1
-    elif direction == 'S':
-        location[0] += 1
-    elif direction == 'W':
-        location[1] -= 1
-    elif direction == 'E':
-        location[1] += 1
-
-    return location
+def move(temp_location, op):
+    if op == 'E':
+        temp_location[1] += 1
+    elif op == 'W':
+        temp_location[1] -= 1
+    elif op == 'S':
+        temp_location[0] += 1
+    else:
+        temp_location[0] -= 1
+    return temp_location
