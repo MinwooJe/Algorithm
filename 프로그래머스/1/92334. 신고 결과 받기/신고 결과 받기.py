@@ -1,26 +1,19 @@
 def solution(id_list, report, k):
-    answer = []
-    report = list(set(report))
-    report_count = {user:0 for user in id_list}
-    report_dict = {user:[] for user in id_list}
-
-    # 신고 정보 집계
-    for rep in report:
-        user, trol = rep.split()
-        # 신고 당한 누적 횟수 세기
-        if trol in report_count:
-            report_count[trol] += 1
-        else:
-            report_count[trol] = 1
-        # 신고자의 신고 내용 저장
-        report_dict[user].append(trol)
+    reported_count = {user:0 for user in id_list}
+    report_to = {trol:[] for trol in id_list}   # 신고 당한 사람: [신고자1, 신고자2,..]
+    mail_count = [0]  * len(id_list)
+    report = set(report)
     
-    # 메일 결과 계산
-    for user, trol in report_dict.items():
-        count = 0
-        for t in trol:
-            if report_count[t] >= k:
-                count += 1
-        answer.append(count)
+    # 신고한 사람 카운팅 + report_to 딕셔너리 완성
+    for r in report:
+        user, trol = r.split()
+        reported_count[trol] += 1
+        report_to[trol].append(user)
     
-    return answer
+    # 정지당한 이용자 찾고 mail_count 갱신
+    for trol, count in reported_count.items():
+        if count >= k:
+            for user in report_to[trol]:
+                mail_count[id_list.index(user)] += 1
+    
+    return mail_count
