@@ -1,11 +1,14 @@
 def solution(X, Y):
     answer = ''
     for i in range(9, -1, -1):
-        answer += str(i) * min(X.count(str(i)), Y.count(str(i)))
+        i = str(i)
+        answer += i * min(X.count(i), Y.count(i))
     
-    if not answer:
+    if len(answer) > 0 and len(answer) == answer.count('0'):
+        answer = '0'
+    
+    if answer:
+        return answer
+    else:
         return '-1'
-    elif answer.count('0') == len(answer):
-        return '0'
-    return answer
     
