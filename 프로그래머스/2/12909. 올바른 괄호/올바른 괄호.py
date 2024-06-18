@@ -1,10 +1,15 @@
 def solution(s):
     stack = []
+    
     for c in s:
         if c == '(':
-            stack.append(')')
-        elif c == ')' and not stack:
+            stack.append('(')
+        elif not stack and c == ')':
             return False
-        elif c == ')' and stack:
+        else:
             stack.pop()
-    return not stack
+    
+    if not stack:
+        return True
+    else:
+        return False
