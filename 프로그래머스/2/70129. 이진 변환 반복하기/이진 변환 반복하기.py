@@ -1,19 +1,12 @@
 def solution(s):
-    answer = [0, 0]
-    s_hash = {'0':s.count('0'), '1':s.count('1')}
-    
+    iter_count, count_0 = 0, 0
+
     while s != '1':
-        answer[0] += 1
-        if s_hash['0'] > 0:     # 0 제거 필요하다면
-            # 0 제거
-            answer[1] += s_hash['0']
-            s_hash['0'] = 0
-            s = '1'*s_hash['1']
-            
-        # 이진법으로 변환
-        len_s = len(s)
-        s = str(bin(len_s)[2:])
-        s_hash = {'0':s.count('0'), '1':s.count('1')}
-            
-        print(s)
-    return answer
+        iter_count += 1
+        count_0 += s.count('0')
+        
+        s = s.replace('0', '')
+        c = len(s)
+        s = bin(c)[2:]
+        
+    return [iter_count, count_0]
