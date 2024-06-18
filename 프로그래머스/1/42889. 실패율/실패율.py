@@ -1,16 +1,15 @@
 def solution(N, stages):
-    challengers = {}
-    fail_hash = {}
-    for i in range(1, N+2):
-        challengers[i] = stages.count(i)
-    
-    reached_count = len(stages)
+    reacher = len(stages)
+    fail_rate_dict = {}
     for i in range(1, N+1):
-        if reached_count > 0:
-            fail_rate = challengers[i] / reached_count
-        else:
+        challenger = stages.count(i)
+        if reacher == 0:
             fail_rate = 0
-        fail_hash[i] = fail_rate
-        reached_count -= challengers[i]
-    answer = sorted(fail_hash, key=lambda x: fail_hash[x], reverse=True)
+        else:
+            fail_rate = challenger / reacher
+        reacher -= challenger
+        fail_rate_dict[i] = fail_rate
+    
+    answer = sorted(fail_rate_dict, key=lambda x: fail_rate_dict[x], reverse=True)
     return answer
+        
