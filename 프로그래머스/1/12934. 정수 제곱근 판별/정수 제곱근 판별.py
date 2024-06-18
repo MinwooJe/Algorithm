@@ -1,6 +1,6 @@
 def solution(n):
-    end = int(n ** 0.5)
-    for i in range(1, end+1):
-        if i*i == n:
-            return (i+1)**2
-    return -1
+    x = n**0.5
+    if x % 1 == 0:
+        return (x+1)**2
+    else:
+        return -1
