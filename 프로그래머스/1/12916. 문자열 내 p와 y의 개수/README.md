@@ -1,10 +1,10 @@
 # [level 1] 문자열 내 p와 y의 개수 - 12916 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/12916?language=swift) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/12916) 
 
 ### 성능 요약
 
-메모리: 16.2 MB, 시간: 0.05 ms
+메모리: 16.3 MB, 시간: 0.06 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 06월 19일 23:32:19
+2024년 06월 21일 17:54:12
 
 ### 문제 설명
 
