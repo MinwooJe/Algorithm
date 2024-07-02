@@ -1,10 +1,10 @@
 # [level 0] 원하는 문자열 찾기 - 181878 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/181878) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/181878?language=swift) 
 
 ### 성능 요약
 
-메모리: 10.2 MB, 시간: 0.07 ms
+메모리: 16.4 MB, 시간: 1.40 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 04월 14일 10:12:53
+2024년 07월 02일 14:11:03
 
 ### 문제 설명
 
