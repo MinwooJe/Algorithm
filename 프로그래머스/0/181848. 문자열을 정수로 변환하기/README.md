@@ -1,10 +1,10 @@
 # [level 0] 문자열을 정수로 변환하기 - 181848 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/181848) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/181848?language=swift) 
 
 ### 성능 요약
 
-메모리: 10.2 MB, 시간: 0.02 ms
+메모리: 16 MB, 시간: 0.04 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 04월 16일 10:26:56
+2024년 07월 02일 13:49:13
 
 ### 문제 설명
 
