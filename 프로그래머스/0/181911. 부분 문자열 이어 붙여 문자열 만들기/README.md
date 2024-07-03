@@ -1,10 +1,10 @@
 # [level 0] 부분 문자열 이어 붙여 문자열 만들기 - 181911 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/181911) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/181911?language=swift#) 
 
 ### 성능 요약
 
-메모리: 10.2 MB, 시간: 0.34 ms
+메모리: 16.4 MB, 시간: 0.32 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 04월 29일 22:09:52
+2024년 07월 03일 09:46:58
 
 ### 문제 설명
 
