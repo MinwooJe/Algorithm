@@ -1,20 +1,6 @@
+import Foundation
+
 func solution(_ n:Int) -> Int {
-    guard n > 0 else {
-        return 0
-    }
-    
-    var answer = 0
-    let end = Int(Double(n).squareRoot())
-    
-    for i in 1...end {
-        if n % i == 0 {
-            answer += i
-            print(i)
-            if i * i != n {
-                answer += n / i
-            }
-        }
-    }
-    
-    return answer
+    if n == 0 { return 0 }
+    return Array(1...n).filter { return n % $0 == 0 }.reduce(0, +)
 }
