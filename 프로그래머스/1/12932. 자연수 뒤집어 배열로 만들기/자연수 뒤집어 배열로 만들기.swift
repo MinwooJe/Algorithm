@@ -1,12 +1,3 @@
-func solution(_ n:Int64) -> [Int] {
-    
-    var num: Int = Int(n)
-    var answer: [Int] = []
-    
-    while num > 0 {
-        answer.append(num % 10)
-        num /= 10
-    }
-    
-    return answer
+func solution(_ n: Int64) -> [Int] {
+    return Array(String(n)).reversed().map { Int(String($0))! }
 }
