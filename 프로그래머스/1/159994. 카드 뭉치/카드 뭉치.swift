@@ -5,12 +5,15 @@ func solution(_ cards1:[String], _ cards2:[String], _ goal:[String]) -> String {
     var cards2 = cards2
     
     for c in goal {
-        if !cards1.isEmpty && cards1[0] == c {
-            cards1.removeFirst()
-        } else if !cards2.isEmpty && cards2[0] == c {
-            cards2.removeFirst()
-        } else {
-            return "No"
+        if let cards1First = cards1.first,
+        let cards2First = cards2.first {
+            if cards1First == c {
+                cards1.removeFirst()
+            } else if cards2First == c {
+                cards2.removeFirst()
+            } else {
+                return "No"
+            }
         }
     }
     
