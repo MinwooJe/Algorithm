@@ -5,9 +5,7 @@ func solution(_ keymap:[String], _ targets:[String]) -> [Int] {
     var keyDict = [Character: Int]()
     
     for key in keymap {
-        let key = Array(key)
-        for k in key {
-            let index = key.firstIndex(of: k)!
+        key.enumerated().forEach { (index, k) in
             if keyDict[k] == nil {
                 keyDict[k] = index
             } else {
@@ -15,18 +13,19 @@ func solution(_ keymap:[String], _ targets:[String]) -> [Int] {
             }
         }
     }
-
+    
     for target in targets {
-        var count = 0
+        var sum = 0
+        
         for t in target {
             if keyDict[t] == nil {
-                count = -1
+                sum = -1
                 break
             } else {
-                count += keyDict[t]! + 1
+                sum += keyDict[t]! + 1
             }
         }
-        result.append(count)
+        result.append(sum)
     }
     
     return result
