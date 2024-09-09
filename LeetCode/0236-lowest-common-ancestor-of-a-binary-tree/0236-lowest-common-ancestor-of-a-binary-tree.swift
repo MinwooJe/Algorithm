@@ -15,11 +15,11 @@
 class Solution {
     func lowestCommonAncestor(_ root: TreeNode?, _ p: TreeNode?, _ q: TreeNode?) -> TreeNode? {
         guard let root, let p, let q else { return nil }
+        
         if root.val == p.val || root.val == q.val {
             return root
         }
         
-        // left, right 구하기 - 옵셔널 타입임 -> 옵셔널 바인딩해야됨.
         let left = lowestCommonAncestor(root.left, p, q)
         let right = lowestCommonAncestor(root.right, p, q)
         
