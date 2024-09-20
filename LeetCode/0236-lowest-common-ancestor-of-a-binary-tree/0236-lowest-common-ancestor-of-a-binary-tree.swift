@@ -16,7 +16,7 @@ class Solution {
     func lowestCommonAncestor(_ root: TreeNode?, _ p: TreeNode?, _ q: TreeNode?) -> TreeNode? {
         guard let root, let p, let q else { return nil }
         
-        if root.val == p.val || root.val == q.val {
+        if root === p || root === q {
             return root
         }
         
