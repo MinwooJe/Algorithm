@@ -2,12 +2,13 @@ import Foundation
 
 func solution(_ d:[Int], _ budget:Int) -> Int {
     var budget = budget
-    var d = d.sorted()
+    var result = 0
     
-    var i = 0
-    while i < d.count && budget - d[i] >= 0 {
-        budget -= d[i]
-        i += 1
+    for money in d.sorted() {
+        guard budget - money >= 0 else { break }
+        budget -= money
+        result += 1
     }
-    return i
+    
+    return result
 }
