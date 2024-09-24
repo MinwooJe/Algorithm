@@ -1,10 +1,18 @@
 class Solution {
-    var memo: [Int: Int] = [1: 1, 2: 2]
+    var memo = [Int: Int]()
+    
     func climbStairs(_ n: Int) -> Int {
-        guard n != 1 && n != 2 else { return memo[n]! }
-        for i in 3...n {
-            memo[i] = memo[i - 1]! + memo[i - 2]!
+        if n == 1 {
+            return 1
         }
+        if n == 2 {
+            return 2
+        }
+        
+        if !memo.keys.contains(n) {
+            memo[n] = climbStairs(n - 1) + climbStairs(n - 2)
+        }
+        
         return memo[n]!
     }
 }
