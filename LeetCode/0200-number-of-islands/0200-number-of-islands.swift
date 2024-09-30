@@ -18,6 +18,7 @@ class Solution {
             let dRow = [-1, 1, 0, 0]
             let dCol = [0, 0, -1, 1]
             var queue = [(row, col)]
+            visited[row][col] = true        // 첫 좌표 방문찍고
             
             while !queue.isEmpty {
                 let (curRow, curCol) = queue.removeFirst()
@@ -29,8 +30,8 @@ class Solution {
                     if nextRow >= 0 && nextRow < rowCount && nextCol >= 0 && nextCol < colCount {
                         if grid[nextRow][nextCol] == "1" && visited[nextRow][nextCol] == false {
                             queue.append((nextRow, nextCol))
+                            // 다음좌표 visited 찍어야 중복 발생 안함.
                             visited[nextRow][nextCol] = true
-
                         }
                     }
                 }
