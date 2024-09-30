@@ -2,36 +2,41 @@ class Solution {
     func numIslands(_ grid: [[Character]]) -> Int {
         let rowCount = grid.count
         let colCount = grid[0].count
+        var visited = Array(repeating: Array(repeating: false, count: colCount), count: rowCount)
         var result = 0
-        var visted = Array(repeating: Array(repeating: false, count: colCount), count: rowCount)
         
         for row in 0..<rowCount {
             for col in 0..<colCount {
-                if visted[row][col] == false && grid[row][col] == "1" {
+                if grid[row][col] == "1" && visited[row][col] == false {
+                    bfs(row, col)
                     result += 1
-                    dfs(row, col)
                 }
             }
         }
         
-        func dfs(_ row: Int, _ col: Int) {
+        func bfs(_ row: Int, _ col: Int) {
             let dRow = [-1, 1, 0, 0]
             let dCol = [0, 0, -1, 1]
+            var queue = [(row, col)]
             
-            visted[row][col] = true
-            
-            for i in 0..<4 {
-                let nextRow = row + dRow[i]
-                let nextCol = col + dCol[i]
+            while !queue.isEmpty {
+                let (curRow, curCol) = queue.removeFirst()
                 
-                if nextRow >= 0 && nextRow < rowCount && nextCol >= 0 && nextCol < colCount
-                    && grid[nextRow][nextCol] == "1"
-                    && visted[nextRow][nextCol] == false {
-                    visted[nextRow][nextCol] = true
-                    dfs(nextRow, nextCol)
+                for i in 0..<4 {
+                    let nextRow = curRow + dRow[i]
+                    let nextCol = curCol + dCol[i]
+                    
+                    if nextRow >= 0 && nextRow < rowCount && nextCol >= 0 && nextCol < colCount {
+                        if grid[nextRow][nextCol] == "1" && visited[nextRow][nextCol] == false {
+                            queue.append((nextRow, nextCol))
+                            visited[nextRow][nextCol] = true
+
+                        }
+                    }
                 }
             }
         }
+        
         return result
     }
 }
