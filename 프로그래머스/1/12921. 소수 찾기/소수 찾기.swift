@@ -1,20 +1,20 @@
 import Foundation
 
 func solution(_ n:Int) -> Int {
-    var count = 0
+    var result = 0
+    
     for i in 2...n {
-        if isPrime(i) {
-            count += 1
-        }
+        result += isPrime(i) ? 1 : 0
     }
     
-    return count
+    return result
 }
 
 func isPrime(_ n: Int) -> Bool {
-    let sqrtN = Int(sqrt(Double(n)))
-    for i in 1...sqrtN {
-        if i == 1 { continue }
+    guard n > 3 else { return true }
+    let end = Int(sqrt(Double(n)))
+    
+    for i in 2...end {
         if n % i == 0 {
             return false
         }
