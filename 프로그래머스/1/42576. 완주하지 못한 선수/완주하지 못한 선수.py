@@ -1,15 +1,9 @@
 def solution(participant, completion):
-    completion_hash = {}
-
-    for i in completion:
-        if i in completion_hash:
-            completion_hash[i] += 1
-        else:
-            completion_hash[i] = 1
+    participant.sort()
+    completion.sort()
     
-    for i in participant:
-        if i in completion_hash:
-            completion_hash[i] -= 1
+    for p, c in zip(participant, completion):
+        if p != c:
+            return p
         
-        if i not in completion_hash or completion_hash[i] < 0:
-            return i
+    return participant[-1]
