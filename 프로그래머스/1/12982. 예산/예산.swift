@@ -4,9 +4,11 @@ func solution(_ d:[Int], _ budget:Int) -> Int {
     var budget = budget
     var result = 0
     
-    for money in d.sorted() {
-        guard budget - money >= 0 else { break }
-        budget -= money
+    for part in d.sorted() {
+        if budget - part < 0 {
+            break
+        }
+        budget -= part
         result += 1
     }
     
