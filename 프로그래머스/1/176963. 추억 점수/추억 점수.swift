@@ -1,15 +1,6 @@
 import Foundation
 
 func solution(_ name:[String], _ yearning:[Int], _ photos:[[String]]) -> [Int] {
-    var result = [Int]()
-    var yearningDict = Dictionary(uniqueKeysWithValues: zip(name, yearning))
-
-    for photo in photos {
-        var score = 0
-        for people in photo {
-            score += yearningDict[people, default: 0]
-        }
-        result.append(score)
-    }
-    return result
+    let yearningDict = Dictionary(uniqueKeysWithValues: zip(name, yearning))
+    return photos.map{ $0.map { yearningDict[$0, default: 0] }.reduce(0, +) }
 }
