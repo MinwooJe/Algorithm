@@ -6,7 +6,6 @@ class Solution {
             guard n != 0 && n != 1 else { return 0 }
             
             if !memo.keys.contains(n) {
-                print(up(to: n - 1), up(to: n - 2))
                 memo[n] = min(up(to: n - 1) + cost[n - 1], up(to: n - 2) + cost[n - 2])
             }
             
