@@ -1,34 +1,25 @@
 import Foundation
 
-let n = Int(readLine()!)!
+let count = Int(readLine()!)!
 var sample = [Int]()
-var sampleAppearCount = [Int: Int]()
+var frequencyDict = [Int: Int]()
 
-for _ in 0..<n {
-    let num = Int(readLine()!)!
-    sample.append(num)
-    sampleAppearCount[num, default: 0] += 1
+for _ in 0..<count {
+    let input = Int(readLine()!)!
+    sample.append(input)
 }
 sample = sample.sorted()
 
-// sampleMode 순회
-// 최빈값들 구하기
-var modeKey = [Int]()
-var maxAppearCount = 0
-for (key, value) in sampleAppearCount {
-    if value > maxAppearCount {
-        modeKey.removeAll()
-        modeKey.append(key)
-        maxAppearCount = value
-    } else if value == maxAppearCount {
-        modeKey.append(key)
-    }
+for i in sample {
+    frequencyDict[i, default: 0] += 1
 }
+let maxFrequency = frequencyDict.values.max()!
+let modes = frequencyDict.filter { $0.value == maxFrequency }.keys.sorted()
 
-let avg = Int(round(Double(sample.reduce(0, +)) / Double(n)))
-let median = sample[n / 2]
-let mode = modeKey.count > 1 ? modeKey.sorted()[1] : modeKey[0]
-let range = sample[n - 1] - sample[0]
+let avg = Int(round(Double(sample.reduce(0, +)) / Double(count)))
+let median = sample[count / 2]
+let mode = modes.count > 1 ? modes[1] : modes[0]
+let range = sample[count - 1] - sample[0]
 
 print(avg)
 print(median)
