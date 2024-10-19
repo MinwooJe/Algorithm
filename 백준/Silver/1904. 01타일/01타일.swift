@@ -1,4 +1,5 @@
 let n = Int(readLine()!)!
+
 var memo = [Int: Int]()
 
 func dp(_ n: Int) -> Int {
