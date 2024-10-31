@@ -1,3 +1,2 @@
 def solution(s):
-    answer = ''.join(sorted(s, reverse=True))
-    return answer
+    return ''.join(sorted(s, reverse=True))
