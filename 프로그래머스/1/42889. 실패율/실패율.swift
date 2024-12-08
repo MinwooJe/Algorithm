@@ -1,19 +1,22 @@
 import Foundation
 
 func solution(_ N:Int, _ stages:[Int]) -> [Int] {
-    var challengers = Dictionary(uniqueKeysWithValues: (1...N+1).map { ($0, 0) })
+    var challengers = [Int: Int]()
     var failRateDict = [Int: Double]()
+    var reachers = stages.count
     
-    stages.forEach { challengers[$0]! += 1 }
+    for stage in stages {
+        challengers[stage, default: 0] += 1
+    }
     
-    var total = stages.count
     for i in 1...N {
-        failRateDict[i] = Double(challengers[i]!) / Double(total)
-        total -= challengers[i]!
+        let failRate = Double(challengers[i, default: 0]) / Double(reachers)
+        failRateDict[i] = failRate
+        reachers -= challengers[i, default: 0]
     }
     
     return failRateDict
-        .sorted { $0.key < $1.key }
-        .sorted { $0.value > $1.value }
-        .map { $0.key }
+                    .sorted { $0.key < $1.key}
+                    .sorted { $0.value > $1.value }
+                    .map { $0.key }
 }
