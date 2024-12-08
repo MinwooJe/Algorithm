@@ -2,20 +2,21 @@ import Foundation
 
 func solution(_ players:[String], _ callings:[String]) -> [String] {
     var players = players
-    var rank = [String: Int]()
+    var playerRankDict = [String: Int]()
     
-    for (index, value) in players.enumerated() {
-        rank[value] = index
+    for (idx, player) in players.enumerated() {
+        playerRankDict[player] = idx
     }
     
-    for winner in callings {
-        let winnerIndex = rank[winner]!
-        let loser = players[winnerIndex - 1]
+    for winnerName in callings {
+        let winnerIdx = playerRankDict[winnerName]!
+        let looserName = players[winnerIdx - 1]
+        let looserIdx = playerRankDict[looserName]!
         
-        rank[winner]! -= 1
-        rank[loser]! += 1
+        playerRankDict[winnerName, default: 0] -= 1
+        playerRankDict[looserName, default: 0] += 1
         
-        players.swapAt(winnerIndex, winnerIndex - 1)
+        players.swapAt(winnerIdx, looserIdx)
     }
     
     return players
