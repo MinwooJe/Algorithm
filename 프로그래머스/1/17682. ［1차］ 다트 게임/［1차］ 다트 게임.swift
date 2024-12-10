@@ -1,34 +1,32 @@
 import Foundation
 
 func solution(_ dartResult:String) -> Int {
-    var points = [Int]()
     let dartResult = dartResult.replacingOccurrences(of: "10", with: "x")
+    var result = [Int]()
+    
     for c in dartResult {
-        let lastIndex = points.count - 1
-        
-        if c.isNumber {
-            points.append(Int(String(c))!)
-        } else if c == "x" {
-            points.append(10)
-        } else {
-            switch c {
-            case "S":
-                continue
-            case "D":
-                points[lastIndex] = points[lastIndex] * points[lastIndex]
-            case "T":
-                points[lastIndex] = points[lastIndex] * points[lastIndex] * points[lastIndex]
-            case "*":
-                points[lastIndex] = points[lastIndex] * 2
-                if lastIndex - 1 >= 0 {
-                    points[lastIndex - 1] = points[lastIndex - 1] * 2
-                }
-            case "#":
-                points[lastIndex] = points[lastIndex] * -1
-            default:
-                break
+        let lastIndex = result.count - 1
+        switch c {
+        case "S":
+            continue
+        case "D":
+            result[lastIndex] = result[lastIndex] * result[lastIndex]
+        case "T":
+            result[lastIndex] = result[lastIndex] * result[lastIndex] * result[lastIndex]
+        case "*":
+            if result.count >= 2 {
+                result[lastIndex] *= 2
+                result[lastIndex - 1] *= 2
+            } else {
+                result[lastIndex] *= 2
             }
+        case "#":
+            result[lastIndex] *= -1
+        case "x":
+            result.append(10)
+        default:
+            result.append(Int(String(c))!)
         }
     }
-    return points.reduce(0, +)
+    return result.reduce(0, +)
 }
