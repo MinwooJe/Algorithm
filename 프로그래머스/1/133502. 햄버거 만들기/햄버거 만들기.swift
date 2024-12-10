@@ -6,15 +6,16 @@ func solution(_ ingredient:[Int]) -> Int {
     
     for i in ingredient {
         stack.append(i)
-        if stack.count >= 4 && stack[(stack.count - 4)...(stack.count - 1)] == [1, 2, 3, 1] {
+        if stack.count >= 4
+        && stack[(stack.count - 4)...(stack.count - 1)] == [1, 2, 3, 1] {
+            stack.removeLast()
+            stack.removeLast()
+            stack.removeLast()
+            stack.removeLast()
+            
             result += 1
-            stack.removeLast()
-            stack.removeLast()
-            stack.removeLast()
-            stack.removeLast()
         }
     }
-    
     
     return result
 }
