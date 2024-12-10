@@ -1,23 +1,19 @@
 import Foundation
 
 func solution(_ n:Int) -> Int {
-    var result = 0
-    
-    for i in 2...n {
-        result += isPrime(i) ? 1 : 0
-    }
-    
-    return result
-}
-
-func isPrime(_ n: Int) -> Bool {
-    guard n > 3 else { return true }
+    var numbers = Array(repeating: true, count: n + 1)
     let end = Int(sqrt(Double(n)))
+    (numbers[0], numbers[1]) = (false, false)
     
-    for i in 2...end {
-        if n % i == 0 {
-            return false
+    for i in 1...end {
+        if numbers[i] == false {
+            continue
+        }
+        
+        for j in stride(from: i + i, to: n + 1, by: i) {
+            numbers[j] = false
         }
     }
-    return true
+    
+    return numbers.filter { $0 == true }.count
 }
