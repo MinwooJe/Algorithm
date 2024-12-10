@@ -1,26 +1,21 @@
 import Foundation
 
 func solution(_ X:String, _ Y:String) -> String {
-    var xDict = [Character: Int]()
-    var yDict = [Character: Int]()
-    var result = ""
+    var answer = ""
     
-    X.forEach { xDict[$0, default: 0] += 1}
-    Y.forEach { yDict[$0, default: 0] += 1}
-    
-    for x in xDict.keys {
-        if let xCount = xDict[x],
-           let yCount = yDict[x] {
-               result += String(repeating: x, count: min(xCount, yCount))
-        }
+    for num in stride(from: 9, to: -1, by: -1) {
+        let charNum = Character(String(num))
+        let xCount = X.filter { $0 == charNum }.count
+        let yCount = Y.filter { $0 == charNum }.count
+        
+        answer += String(repeating: charNum, count: min(xCount, yCount))
     }
     
-    
-    if result == "" {
+    if answer.isEmpty {
         return "-1"
-    } else if Set(result) == ["0"] {
+    } else if Set(answer) == ["0"] {
         return "0"
     } else {
-        return String(result.sorted(by: >))
+        return answer
     }
 }
