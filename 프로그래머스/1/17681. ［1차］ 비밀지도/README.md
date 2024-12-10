@@ -1,10 +1,10 @@
 # [level 1] [1차] 비밀지도 - 17681 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/17681?language=swift) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/17681) 
 
 ### 성능 요약
 
-메모리: 16.6 MB, 시간: 0.11 ms
+메모리: 16.6 MB, 시간: 0.15 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 09월 02일 15:42:57
+2024년 12월 10일 13:17:35
 
 ### 문제 설명
 
