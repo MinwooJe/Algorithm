@@ -2,17 +2,19 @@ import Foundation
 
 func solution(_ number:Int, _ limit:Int, _ power:Int) -> Int {
     return (1...number)
-        .map { return numberOfDivisor(for: $0) > limit ? power : numberOfDivisor(for: $0) }
-        .reduce(0, +)
+    .map {
+        let attackPower = getDivisorCount($0)
+        return attackPower > limit ? power : attackPower
+    }.reduce(0, +)
 }
 
-func numberOfDivisor(for number: Int) -> Int {
+func getDivisorCount(_ number: Int) -> Int {
     let end = Int(sqrt(Double(number)))
     var count = 0
     
-    for d in 1...end {
-        if number % d == 0 {
-            count += d * d == number ? 1 : 2
+    for i in 1...end {
+        if number % i == 0 {
+            count += i * i == number ? 1 : 2
         }
     }
     
