@@ -1,19 +1,16 @@
 import Foundation
 
 func solution(_ n:Int) -> Int {
-    var numbers = Array(repeating: true, count: n + 1)
-    let end = Int(sqrt(Double(n)))
-    (numbers[0], numbers[1]) = (false, false)
+    let end = Int(sqrt(Double(n))) + 1
+    var isPrime = Array(repeating: true, count: n + 1)
+    (isPrime[0], isPrime[1]) = (false, false)
     
-    for i in 1...end {
-        if numbers[i] == false {
-            continue
-        }
-        
+    for i in 2...end {
         for j in stride(from: i + i, to: n + 1, by: i) {
-            numbers[j] = false
+            isPrime[j] = false
         }
     }
+
+    return isPrime.filter { $0 == true }.count
     
-    return numbers.filter { $0 == true }.count
 }
