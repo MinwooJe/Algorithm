@@ -1,35 +1,34 @@
 import Foundation
 
 func solution(_ survey:[String], _ choices:[Int]) -> String {
-    let pointDict = makePointDict(survey, choices)
-    let result = sortedResult(pointDict)
-    return result
-}
+    var testResult: [Character: Int] = [
+        "R": 0, "T": 0, "C": 0, "F": 0,
+        "J": 0, "M": 0, "A": 0, "N": 0
+    ]
 
-func makePointDict(_ survey:[String], _ choices:[Int]) -> [String: Int] {
-    var pointDict = [String: Int]()
-    
     for (s, c) in zip(survey, choices) {
-        let components = s.map( { String($0) })
-        let (first, second) = (components[0], components[1])
-
-        if c > 4 {
-            pointDict[second, default: 0] += c - 4
-        } else if c < 4 {
-            pointDict[first, default: 0] += 4 - c
+        let point = getPoint(of: c)
+        if c < 4 {  // 비동의 - 앞 캐릭터
+            testResult[s.first!, default: 0] += point
+        } else if c > 4 {  // 동의 - 뒤 캐릭터
+            testResult[s.last!, default: 0] += point
         }
     }
     
-    return pointDict
+    return getResult(of: testResult)
 }
 
-func sortedResult(_ pointDict: [String: Int]) -> String {
-    var result = ""
-    
-    result += pointDict["R", default: 0] >= pointDict["T", default: 0] ? "R" : "T"
-    result += pointDict["C", default: 0] >= pointDict["F", default: 0] ? "C" : "F"
-    result += pointDict["J", default: 0] >= pointDict["M", default: 0] ? "J" : "M"
-    result += pointDict["A", default: 0] >= pointDict["N", default: 0] ? "A" : "N"
+func getPoint(of choice: Int) -> Int {
+    return choice <= 4 ? 4 - choice : choice - 4
+}
 
+func getResult(of testResult: [Character: Int]) -> String {
+    var result = ""
+    print(testResult)
+    result += testResult["R"]! >= testResult["T"]! ? "R" : "T"
+    result += testResult["C"]! >= testResult["F"]! ? "C" : "F"
+    result += testResult["J"]! >= testResult["M"]! ? "J" : "M"
+    result += testResult["A"]! >= testResult["N"]! ? "A" : "N"
+    
     return result
 }
