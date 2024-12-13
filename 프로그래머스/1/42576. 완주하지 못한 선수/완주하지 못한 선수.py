@@ -1,14 +1,16 @@
 def solution(participant, completion):
     completionDict = {}
     
-    for player in completion:
-        if player in completionDict:
-            completionDict[player] += 1
+    for c in completion:
+        if c not in completionDict:
+            completionDict[c] = 1
         else:
-            completionDict[player] = 1
+            completionDict[c] += 1
 
-    for player in participant:
-        if player not in completionDict or completionDict[player] == 0:
-            return player
-        
-        completionDict[player] -= 1
+    for p in participant:
+        if p not in completionDict:
+            return p
+        elif completionDict[p] == 0:
+            return p
+        else:
+            completionDict[p] -= 1
