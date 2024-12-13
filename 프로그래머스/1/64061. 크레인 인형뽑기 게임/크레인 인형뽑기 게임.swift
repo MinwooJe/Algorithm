@@ -6,26 +6,31 @@ func solution(_ board:[[Int]], _ moves:[Int]) -> Int {
     var result = 0
     
     for move in moves {
-        let row = move - 1
-        var col = 0
+        var row = 0
+        let col = move - 1
         
-        while col < board.count - 1 && board[col][row] == 0 {
-            col += 1
+        while row < board.count {
+            if board[row][col] == 0 {
+                row += 1
+            } else {
+                break
+            }
         }
         
-        guard board[col][row] != 0 else { continue }
+        guard row < board.count else { continue }
         
-        basket.append(board[col][row])
-        board[col][row] = 0
+        basket.append(board[row][col])
+        board[row][col] = 0
         
-        if basket.count >= 2
-            && basket[basket.count - 1] == basket[basket.count - 2] {
-                basket.removeLast()
-                basket.removeLast()
-                result += 2
-            }
+        let basketMax = basket.count
+        if basketMax >= 2 
+        && basket[basketMax - 1] == basket[basketMax - 2] {
+            basket.removeLast()
+            basket.removeLast()
+            result += 2
+        }
+        
     }
     
     return result
 }
-
