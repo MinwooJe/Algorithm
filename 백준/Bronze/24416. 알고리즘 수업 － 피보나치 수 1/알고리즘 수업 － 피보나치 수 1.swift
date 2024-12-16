@@ -1,14 +1,16 @@
-func recursionFib(_ n: Int) -> Int {
-    guard n != 1 && n != 2 else {
-        return 1
+let n = Int(readLine()!)!
+
+func fib(_ n: Int) -> Int {
+    var table = [Int: Int]()
+    (table[1], table[2]) = (1, 1)
+    
+    guard n != 1 && n != 2 else { return 1 }
+    
+    for i in 3...n {
+        table[i] = table[i - 1]! + table[i - 2]!
     }
-    return recursionFib(n - 1) + recursionFib(n - 2)
+    
+    return table[n]!
 }
 
-func main() {
-    let n = Int(readLine()!)!
-
-    print(recursionFib(n), n - 2)
-}
-
-main()
+print(fib(n), n - 2)
