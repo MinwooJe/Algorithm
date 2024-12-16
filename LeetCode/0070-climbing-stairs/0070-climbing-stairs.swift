@@ -1,15 +1,13 @@
 class Solution {
-    var memo = [Int: Int]()
-    
     func climbStairs(_ n: Int) -> Int {
-        if n == 1 || n == 2 {
-            return n
+        var table = [Int: Int]()
+        (table[1], table[2]) = (1, 2)
+
+        guard n != 1 && n != 2 else { return table[n]! }
+        for i in 3...n {
+            table[i] = table[i - 1]! + table[i - 2]!
         }
-        
-        if memo[n] == nil {
-            memo[n] = climbStairs(n - 1) + climbStairs(n - 2)
-        }
-        
-        return memo[n]!
+
+        return table[n]!
     }
 }
