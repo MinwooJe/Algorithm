@@ -1,11 +1,14 @@
-class Solution {
+class Solution {    
     func minCostClimbingStairs(_ cost: [Int]) -> Int {
+        var memo = [Int: Int]()
+        
         func dp(_ n: Int) -> Int {
-            var memo = [0: 0, 1: 0]
+            guard n != 0 && n != 1 else { return 0 }
             
-            for i in 2...n {
-                memo[i] = min(memo[i - 1]! + cost[i - 1], memo[i - 2]! + cost[i - 2])
+            if memo[n] == nil {
+                memo[n] = min(dp(n - 1) + cost[n - 1], dp (n - 2) + cost[n - 2])
             }
+            
             return memo[n]!
         }
         
