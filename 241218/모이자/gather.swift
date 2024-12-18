@@ -6,11 +6,11 @@ let home = readLine()!.components(separatedBy: " ").map { Int($0)! }
 
 var result = [Int]()
 
-for target in 0..<home.count {
+for targetAddress in 0..<home.count {
     var moveDistanceSum = 0
     for (address, numberOfPeople) in home.enumerated() {
         // 거리 * 사람 수
-        moveDistanceSum += abs(target - address) * numberOfPeople
+        moveDistanceSum += abs(targetAddress - address) * numberOfPeople
     }
     result.append(moveDistanceSum)
 }
