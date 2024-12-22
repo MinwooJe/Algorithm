@@ -1,31 +1,27 @@
 import Foundation
 
 func solution(_ today:String, _ terms:[String], _ privacies:[String]) -> [Int] {
-    let today = convertToDays(for: today)
-    var termsDict = [String: Int]()
     var result = [Int]()
+    var termsDict = [String: Int]()
     
     for term in terms {
-        let term = term.split(separator: " ").map { String($0) }
-        termsDict[term[0]] = Int(term[1])!
+        let components = term.components(separatedBy: " ")
+        termsDict[components[0]] = Int(components[1])! * 28
     }
-
-    for (idx, privacy) in privacies.enumerated() {
-        let components = privacy.split(separator: " ").map { String($0) }
-        let dueDate = convertToDays(for: components[0]) + termsDict[components[1]]! * 28
-        
-        if today >= dueDate {
-            result.append(idx + 1)
+    
+    for i in 0..<privacies.count {
+        let components = privacies[i].components(separatedBy: " ")
+        let dueDate = parseToDay(for: components[0]) + termsDict[components[1]]!
+        if dueDate <= parseToDay(for: today) {
+            result.append(i + 1)
         }
     }
+    
     return result
 }
 
-func convertToDays(for date: String) -> Int {
-    let components = date.split(separator: ".")
-    let year = Int(components[0])!
-    let month = Int(components[1])!
-    let day = Int(components[2])!
-    
-    return (year * 12 * 28) + (month * 28) + day
+// 0년 0월 1일 == 1
+func parseToDay(for date: String) -> Int {
+    let components = date.components(separatedBy: ".").map { Int($0)! }
+    return (components[0] * 12 * 28) + (components[1] * 28) + components[2]
 }
