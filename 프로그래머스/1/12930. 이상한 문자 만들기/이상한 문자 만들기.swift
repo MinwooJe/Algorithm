@@ -1,22 +1,20 @@
-func solution(_ str:String) -> String {
-    var wordIdx = 0
-    var result = [String]()
+func solution(_ s:String) -> String {
+    var arr = Array(s).map { String($0) }
+    var currIdx = 0
     
-    for s in str {
-        if s == " " {
-            wordIdx = 0
-            result.append(" ")
+    for i in 0..<s.count {
+        if arr[i] == " " {
+            currIdx = 0
             continue
         }
         
-        if wordIdx % 2 == 0 {
-            result.append(s.uppercased())
+        if currIdx % 2 == 0 {
+            arr[i] = arr[i].uppercased()
         } else {
-            result.append(s.lowercased())
+            arr[i] = arr[i].lowercased()
         }
-        
-        wordIdx += 1
+        currIdx += 1
     }
     
-    return result.joined()
+    return arr.joined(separator: "")
 }
