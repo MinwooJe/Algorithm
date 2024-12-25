@@ -6,7 +6,7 @@ func solution(_ k:Int, _ score:[Int]) -> [Int] {
     
     for s in score {
         if hallOfFame.count == k {
-            hallOfFame[k - 1] = max(hallOfFame[k - 1], s)
+            hallOfFame[k - 1] = max(s, hallOfFame[k - 1])
         } else {
             hallOfFame.append(s)
         }
