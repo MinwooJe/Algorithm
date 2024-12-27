@@ -1,15 +1,15 @@
 import Foundation
 
 func solution(_ clothes:[[String]]) -> Int {
-    var clothesCountDict = [String: Int]()
+    var clothesHash = [String: Int]()
     var result = 1
-
+    
     for clothe in clothes {
-        clothesCountDict[clothe[1], default: 0] += 1
+        clothesHash[clothe[1], default: 0] += 1
     }
     
-    for count in clothesCountDict.values {
-        result *= (count + 1)
+    for k in clothesHash.values {
+        result *= (k + 1)
     }
     
     return result - 1
