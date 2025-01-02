@@ -1,10 +1,10 @@
 # [level 2] 최솟값 만들기 - 12941 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/12941?language=swift) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/12941) 
 
 ### 성능 요약
 
-메모리: 16.6 MB, 시간: 5.06 ms
+메모리: 16.6 MB, 시간: 5.10 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 09월 18일 20:04:54
+2025년 01월 02일 17:17:44
 
 ### 문제 설명
 
