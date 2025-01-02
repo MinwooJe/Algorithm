@@ -1,19 +1,21 @@
 func solution(_ s:String) -> String {
-    var target: Array = Array(s).map { String($0) }
-    var isFirst: Bool = true
-    
-    for i in 0..<target.count {        
-        if isFirst && Character(target[i]).isLetter {
-            target[i] = target[i].uppercased()
+    var result = ""
+    var wordIdx = 0
+    for c in s {
+        if wordIdx == 0 && c.isLetter {
+            result += String(c.uppercased())
+        } else if c.isLetter {
+            result += String(c.lowercased())
         } else {
-            target[i] = target[i].lowercased()
+            result += String(c)
         }
         
-        if target[i] == " " {
-            isFirst = true
-        } else {
-            isFirst = false
+        wordIdx += 1
+
+        if c == " " {
+            wordIdx = 0
         }
     }
-    return String(target.joined(separator: ""))
+    
+    return result
 }
