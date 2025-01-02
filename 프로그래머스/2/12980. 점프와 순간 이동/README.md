@@ -1,10 +1,10 @@
 # [level 2] 점프와 순간 이동 - 12980 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/12980?language=swift) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/12980) 
 
 ### 성능 요약
 
-메모리: 16.3 MB, 시간: 0.01 ms
+메모리: 16.4 MB, 시간: 0.01 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 09월 18일 21:36:37
+2025년 01월 02일 17:45:20
 
 ### 문제 설명
 
