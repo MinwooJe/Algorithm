@@ -1,15 +1,12 @@
 let target = Int(readLine()!)!
-var generator = target
-var generators = [Int]()
+var decomposition = 0
 
-while generator != 0 {
-    generator -= 1
-    let arr = String(generator).compactMap { $0.wholeNumberValue }
-    let decomposition = generator + arr.reduce(0, +)
-    
-    if decomposition == target {
-        generators.append(generator)
+for i in 1...target {
+    let candidate = i + String(i).map { Int(String($0))! }.reduce(0, +)
+    if candidate == target {
+        decomposition = i
+        break
     }
 }
 
-print(generators.min() ?? 0)
+print(decomposition)
