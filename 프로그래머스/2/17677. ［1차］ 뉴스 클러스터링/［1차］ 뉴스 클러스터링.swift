@@ -1,38 +1,46 @@
 func solution(_ str1:String, _ str2:String) -> Int {
-    let set1 = createMultipleSet(Array(str1.lowercased()).map { String($0) })
-    let set2 = createMultipleSet(Array(str2.lowercased()).map { String($0) })
+    let arr1 = parseStr(str1)
+    let arr2 = parseStr(str2)
+    let str1Dict = convertToDict(arr1)
+    let str2Dict = convertToDict(arr2)
     
-    guard set1.count + set2.count != 0 else { return 65536 }
+    var intersection = 0
     
-    let intersectionCount = getIntersectionCount(set1, set2)
-    let unionCount = set1.count + set2.count - intersectionCount
+    for key in str1Dict.keys {
+        intersection += min(str1Dict[key, default: 0], str2Dict[key, default: 0])
+    }
+    let union = arr1.count + arr2.count - intersection
     
-    let result = Int(Double(intersectionCount) / Double(unionCount) * 65536)
+    // 나눗셈이 정의되지 않는 경우
+    if union == 0 {
+        return 65536
+    } else {
+        print(intersection, union, intersection * 65536 / union)
+        return Int(Double(intersection) / Double(union) * 65536)
+    }
+}
+
+func parseStr(_ str: String) -> [String] {
+    let str = Array(str)
+    var result = [String]()
+    
+    for i in 0..<(str.count - 1) {
+        if str[i].isLetter && str[i + 1].isLetter {
+            let left = String(str[i]).lowercased()
+            let right = String(str[i + 1]).lowercased()
+            result.append(left + right)
+        }
+    }
+    
     return result
 }
 
-func createMultipleSet(_ str: [String]) -> [String] {
-    var multipleSet = [String]()
-    for i in 0..<str.count - 1 {
-        let word = str[i] + str[i + 1]
-        if word.allSatisfy({ $0.isLetter && $0.isASCII }) {
-            multipleSet.append(word)
-        }
-    }
-    return multipleSet
-}
+func convertToDict(_ array: [String]) -> [String: Int] {
+    var result = [String: Int]()
 
-func getIntersectionCount(_ setA: [String], _ setB: [String]) -> Int {
-    var result = 0
-    var setB = setB
-    
-    for s in setA {
-        if setB.contains(s) {
-            if let index = setB.firstIndex(of: s) {
-                setB.remove(at: index)
-            }
-            result += 1
-        }
+    for str in array {
+        result[str, default: 0] += 1
     }
+    
     return result
 }
