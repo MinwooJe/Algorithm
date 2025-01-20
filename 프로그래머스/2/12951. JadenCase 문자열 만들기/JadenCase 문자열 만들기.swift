@@ -1,21 +1,22 @@
 func solution(_ s:String) -> String {
-    var result = ""
-    var wordIdx = 0
-    for c in s {
-        if wordIdx == 0 && c.isLetter {
-            result += String(c.uppercased())
-        } else if c.isLetter {
-            result += String(c.lowercased())
-        } else {
-            result += String(c)
-        }
-        
-        wordIdx += 1
+    var answer = ""
+    var wordIndex = 0
 
-        if c == " " {
-            wordIdx = 0
+    for c in s {
+        let strC = String(c)
+        if strC == " " {
+            wordIndex = 0
+            answer += strC
+            continue
+        } else if c.isLetter && wordIndex == 0 {
+            answer += strC.uppercased()
+        } else if c.isLetter {
+            answer += strC.lowercased()
+        } else {
+            answer += strC
         }
+        wordIndex += 1
     }
-    
-    return result
+
+    return answer
 }
