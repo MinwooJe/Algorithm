@@ -8,22 +8,19 @@ from collections import deque
 
 class Solution:
     def maxDepth(self, root: Optional[TreeNode]) -> int:
-        maxDepth = 0
-
+        max_depth = 0
         if root is None:
-            return maxDepth
+            return max_depth
         
-        q = deque()
-        q.append((root, 1))
+        queue = deque()
+        queue.append((root, 1))
+
+        while queue:
+            (curr, height) = queue.popleft()
+            max_depth = height
+            if curr.left:
+                queue.append((curr.left, height+1))
+            if curr.right:
+                queue.append((curr.right, height+1))
         
-        while q:
-            (cur_node, depth) = q.popleft()
-            maxDepth = max(maxDepth, depth)
-            if cur_node.left != None:
-                q.append((cur_node.left, depth + 1))
-            if cur_node.right != None:
-                q.append((cur_node.right, depth + 1))
-                
-        return maxDepth
-        
-        
+        return max_depth
