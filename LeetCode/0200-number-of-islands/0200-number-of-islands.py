@@ -8,9 +8,8 @@ class Solution:
         visited = [[False] * colCount for _ in range(rowCount)]
 
         def bfs(row, col):
-            dRow = [-1, 1, 0 ,0]
+            dRow = [-1, 1, 0, 0]
             dCol = [0, 0, -1, 1]
-            visited[row][col] = True
             queue = deque()
             queue.append((row, col))
 
@@ -19,12 +18,11 @@ class Solution:
                 for i in range(4):
                     nextRow = curRow + dRow[i]
                     nextCol = curCol + dCol[i]
-
                     if nextRow >= 0 and nextRow < rowCount and nextCol >= 0 and nextCol < colCount:
-                        if grid[nextRow][nextCol] == '1' and not visited[nextRow][nextCol]:
-                            visited[nextRow][nextCol] = True
+                        if grid[nextRow][nextCol] == '1' and visited[nextRow][nextCol] == False:
                             queue.append((nextRow, nextCol))
-        
+                            visited[nextRow][nextCol] = True
+
         for i in range(rowCount):
             for j in range(colCount):
                 if grid[i][j] == '1' and visited[i][j] == False:
