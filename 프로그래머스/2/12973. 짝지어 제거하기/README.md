@@ -1,10 +1,10 @@
 # [level 2] 짝지어 제거하기 - 12973 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/12973) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/12973?language=swift) 
 
 ### 성능 요약
 
-메모리: 14.7 MB, 시간: 189.22 ms
+메모리: 21 MB, 시간: 210.37 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 06월 18일 21:07:39
+2025년 01월 31일 20:18:57
 
 ### 문제 설명
 
