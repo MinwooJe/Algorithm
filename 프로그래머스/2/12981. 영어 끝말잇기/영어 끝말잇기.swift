@@ -1,25 +1,28 @@
 import Foundation
+/**
+1. 앞 사람의 마지막 문자 == 뒷 사람의 마지막 문자
+2. 이전에 등장했는지?
 
-var wordDictionary = [String: Bool]()
+가장 먼저 탈락하는 사람의 번호와 그 사람이 자신의 몇 번째 차례에 탈락하는지 구하기
+
+1) 탈락자 찾기
+2) 탈락자 번호, 몇 번째 차례에 탈락하는지 찾기
+*/
 func solution(_ n:Int, _ words:[String]) -> [Int] {
-    wordDictionary[words[0]] = true
-
-    for idx in 1..<words.count {
-        if isDuplicated(words[idx]) || !isValid(words[idx - 1], words[idx]) {
-            let player = idx % n + 1
-            let round = idx / n + 1
-            return [player, round]
+    var visitedWords = Set<String>()
+    var answer = [0, 0]
+    
+    visitedWords.insert(words[0])
+    for i in 1..<words.count {
+        if words[i - 1].last! != words[i].first!
+        || visitedWords.contains(words[i]) {
+            let player = i % n + 1
+            let turn = i / n + 1
+            answer = [player, turn]
+            break
         }
-        wordDictionary[words[idx]] = true
+        visitedWords.insert(words[i])
     }
 
-    return [0, 0]
-}
-
-func isDuplicated(_ word: String) -> Bool {
-    return wordDictionary[word] != nil
-}
-
-func isValid(_ prev: String, _ curr: String) -> Bool {
-    return prev.last == curr.first
+    return answer
 }
