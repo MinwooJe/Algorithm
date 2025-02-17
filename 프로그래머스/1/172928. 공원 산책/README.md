@@ -1,10 +1,10 @@
 # [level 1] 공원 산책 - 172928 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/172928?language=swift) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/172928#) 
 
 ### 성능 요약
 
-메모리: 16.4 MB, 시간: 0.74 ms
+메모리: 16.5 MB, 시간: 0.50 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 12월 14일 16:29:22
+2025년 02월 17일 17:58:04
 
 ### 문제 설명
 
