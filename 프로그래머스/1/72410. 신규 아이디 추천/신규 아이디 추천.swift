@@ -1,22 +1,22 @@
 import Foundation
 
-// ID 제약 조건 - 소문자, 숫자, 빼기, 밑줄, 마침표 문자만 사용 가능
+/**
+- 길이: 3~ 15
+- 알파벳 소문자, 숫자, 특수문자(-, _, .)
+- 마침표는 처음과 끝에만 사용 가능, 연속 불가
+*/
 func solution(_ new_id:String) -> String {
-    var newID = new_id
-    var stack = [Character]()
-    
-    // 1단계
-    newID = newID.lowercased()
-    
-    // 2단계
-    newID = newID.filter { $0.isLetter || $0.isNumber || $0 == "-" || $0 == "_" || $0 == "." }
-    
+    // 1단계 & 2단계
+    var new_id = new_id
+        .lowercased()   
+        .filter { $0.isLetter || $0.isNumber || $0 == "-" || $0 == "_" || $0 == "." } 
+
     // 3단계
-    for c in newID {
+    var stack = [Character]()
+    for c in new_id {
         stack.append(c)
-        let lastIdx = stack.count - 1
-        if stack.count >= 2 
-        && stack[lastIdx] == "." && stack[lastIdx - 1] == "." {
+        let count = stack.count
+        if stack.count >= 2 && stack[count - 1] == "." && stack[count - 2] == "." {
             stack.removeLast()
         }
     }
@@ -28,28 +28,28 @@ func solution(_ new_id:String) -> String {
     if !stack.isEmpty && stack[stack.count - 1] == "." {
         stack.removeLast()
     }
-    newID = String(stack)
-
+    
     // 5단계
     if stack.isEmpty {
         stack.append("a")
     }
-
+    
     // 6단계
     if stack.count >= 16 {
         stack = Array(stack[0..<15])
-    }
-    if !stack.isEmpty && stack[stack.count - 1] == "." {
-    stack.removeLast()
+        if stack[stack.count - 1] == "." {
+            stack.removeLast()
+        }
     }
     
     // 7단계
-    while stack.count < 3 {
-        if let lastChar = stack.last {
+    if stack.count < 3 {
+        let lastChar = stack[stack.count - 1]
+        while stack.count < 3 {
             stack.append(lastChar)
         }
     }
     
-    newID = String(stack)
-    return newID
+    let result = stack.map { String($0) }.joined(separator: "")
+    return result
 }
