@@ -1,22 +1,15 @@
 import Foundation
 
-func solution(_ s:String) -> Int{
-    var answer:Int = -1
+func solution(_ s:String) -> Int {
     var stack = [Character]()
-
-    for c in s {
-        if let lastCharacter = stack.last {
-            if c == lastCharacter {
-                stack.removeLast()
-                continue
-            }
-        }
-        stack.append(c)
-    }
     
-    if stack.isEmpty {
-        return 1
-    } else {
-        return 0
+    for c in s {
+        stack.append(c)
+        if stack.count >= 2 && stack[stack.count - 1] == stack[stack.count - 2] {
+            stack.removeLast()
+            stack.removeLast()
+        }
     }
+
+    return stack.isEmpty ? 1 : 0
 }
