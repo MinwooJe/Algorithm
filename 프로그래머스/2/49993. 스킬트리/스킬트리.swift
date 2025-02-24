@@ -1,21 +1,10 @@
 import Foundation
 
 func solution(_ skill:String, _ skill_trees:[String]) -> Int {
-    var result = 0
-    
-    for tree in skill_trees {
-        var skill = Array(skill)
-        var flag = true
-        for s in tree {
-            if skill.contains(s) && !skill.isEmpty {
-                guard s == skill[0] else {
-                    flag = false
-                    break
-                }
-                skill.removeFirst()
-            }
-        }
-        result += flag ? 1 : 0
-    }
-    return result
+    return skill_trees.map { isAvailable(skill, $0) }.filter { $0 }.count
+}
+
+func isAvailable(_ skill: String, _ tree: String) -> Bool {
+    let filtered = tree.filter { skill.contains($0) }
+    return skill.starts(with: filtered)
 }
