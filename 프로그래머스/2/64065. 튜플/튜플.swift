@@ -1,13 +1,51 @@
+import Foundation
+
 func solution(_ s:String) -> [Int] {
-    var components = [Int: Int]()
+    let tupleSet = parse(s).sorted { $0.count < $1.count }
+    var result = [Int]()
+    var resultSet = [Int]()     // 중복 검사를 빠르게 하기 위함.
     
-    s.split { !$0.isNumber }.map { Int(String($0))! }.forEach { components[$0, default: 0] += 1}
-    
-    return components.sorted { $0.value > $1.value }.map { $0.key }
+    for subset in tupleSet {
+        for s in subset {
+            if !resultSet.contains(s) {
+                result.append(s)
+                resultSet.append(s)
+            }
+        }
+    }
+
+    return result
 }
 
-/**
-다르게 생각하면, 튜플의 앞쪽 원소는 많이 나옴.
-예를 들어 테케 2의 2는 총 네 번 나옴. 4는 한 번 나옴.
-따라서 각 숫자가 몇 번 나왔는지 딕셔너리를 이용해 개수를 세고, 값의 내림차순으로 키를 리턴하면 됨.
-*/
+func parse(_ str: String) -> [[Int]] {
+    var result = [[Int]]()
+    var num = ""
+    var temp = [Int]()
+    var isOpenParthesis = false
+    let arr = Array(str)
+
+    for i in 1..<(arr.count - 1) {
+        let element = arr[i]
+
+        if element == "{" {
+            isOpenParthesis = true
+        } else if element == "}" {
+            if num.count > 0 {
+                temp.append(Int(String(num))!)
+                num = ""
+            } 
+            isOpenParthesis = false
+            result.append(temp)
+            temp = []
+        } else if element == "," {
+            if isOpenParthesis {
+                temp.append(Int(String(num))!)
+                num = ""
+            }
+        } else if element.isNumber {
+            num += String(element)
+        }
+    }
+
+    return result
+}
