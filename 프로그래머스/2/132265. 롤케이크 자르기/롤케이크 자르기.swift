@@ -1,24 +1,23 @@
 import Foundation
 
-// 동일한 가짓수의 토핑 -> 공평
 func solution(_ topping:[Int]) -> Int {
-    var kindOfTopping = [Int: Int]()
-    var olderTopping = Set<Int>()
     var result = 0
-
+    var leftTopping = Set<Int>()
+    var rightTopping = [Int: Int]()     // [토핑 종류: 개수]
+    
     for t in topping {
-        kindOfTopping[t, default: 0] += 1
+        rightTopping[t, default: 0] += 1
     }
 
     for t in topping {
-        kindOfTopping[t, default: 0] -= 1
-        olderTopping.insert(t)
+        rightTopping[t]! -= 1
+        leftTopping.insert(t)
         
-        if kindOfTopping[t, default: 0] <= 0 {
-            kindOfTopping.removeValue(forKey: t)
+        if rightTopping[t, default: 0] <= 0 {
+            rightTopping[t] = nil
         }
 
-        if kindOfTopping.count == olderTopping.count {
+        if leftTopping.count == rightTopping.count {
             result += 1
         }
     }
