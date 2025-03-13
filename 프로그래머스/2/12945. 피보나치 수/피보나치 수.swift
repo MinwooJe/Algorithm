@@ -1,10 +1,10 @@
 func solution(_ n:Int) -> Int {
-    var table = Array(repeating: 0, count: n + 1)
-    (table[0], table[1]) = (0, 1)
+    var dp = Array(repeating: -1, count: n + 1)
+    (dp[0], dp[1]) = (0, 1)
     
     for i in 2...n {
-        table[i] = (table[i - 1] + table[i - 2]) % 1234567
+        dp[i] = (dp[i - 1] + dp[i - 2]) % 1234567
     }
-
-    return table[n]
+    
+    return dp[n]
 }
