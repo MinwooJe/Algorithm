@@ -1,28 +1,26 @@
 import Foundation
 /**
-1. 앞 사람의 마지막 문자 == 뒷 사람의 마지막 문자
-2. 이전에 등장했는지?
+- 중복 단어 x
+- 앞 사람의 마지막 글자 == 뒷 사람의 첫 글자
 
-가장 먼저 탈락하는 사람의 번호와 그 사람이 자신의 몇 번째 차례에 탈락하는지 구하기
-
-1) 탈락자 찾기
-2) 탈락자 번호, 몇 번째 차례에 탈락하는지 찾기
+출력: [가장 먼저 탈락하는 사람의 번호, 자신의 몇 번째 차례인지?]
 */
 func solution(_ n:Int, _ words:[String]) -> [Int] {
     var visitedWords = Set<String>()
-    var answer = [0, 0]
-    
+    var result = [0, 0]
+
     visitedWords.insert(words[0])
     for i in 1..<words.count {
-        if words[i - 1].last! != words[i].first!
-        || visitedWords.contains(words[i]) {
+        if words[i - 1].last! != words[i].first! || visitedWords.contains(words[i]) {
+            print(words[i], i)
             let player = i % n + 1
             let turn = i / n + 1
-            answer = [player, turn]
+            result = [player, turn]
             break
         }
         visitedWords.insert(words[i])
+        print(visitedWords)
     }
 
-    return answer
+    return result
 }
