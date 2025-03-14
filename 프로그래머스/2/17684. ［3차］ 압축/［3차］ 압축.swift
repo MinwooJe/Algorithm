@@ -1,39 +1,32 @@
-// T O B E O R N O T TO BE O R TOB EO RNOT
-
-/**
-입력: 대문자 문자열
-출력: 압축한 후의 사전 인덱스를 배열로 출력
-
-압축 가정
-1. 길이가 1인 모든 단어를 포함하도록 사전 초기화 (A: 1, ..., Z: 26)
-2. 사전에서 현재 입력과 일치하는 가장 긴 문자열 `W` 찾기
-3. w에 해당하는 사전의 색인 번호 출력, 입력에서 w 제거
-4. 입력에서 처리되지 않은 다음 글자가 남아있다면(c), w+c에 해당하는 단어를 사전에 등록
-5. 단계 2로 돌아감.
-*/
 func solution(_ msg:String) -> [Int] {
-    let msg = Array(msg)
+    var msg = msg.map { String($0) }
     var result = [Int]()
-    var dict: [String: Int] = [:]
-    for (i, char) in "ABCDEFGHIJKLMNOPQRSTUVWXYZ".enumerated() {
-        dict[String(char)] = i + 1
+    var dict = [String: Int]()
+    
+    for (idx, char) in "ABCDEFGHIJKLMNOPQRSTUVWXYZ".enumerated() {
+        dict[String(char)] = idx + 1
     }
     
     var currIdx = 0
-    var word = String(msg[currIdx])
-    while currIdx < msg.count - 1 {
-        let next = String(msg[currIdx + 1])
+    var currWord = msg[0]
+    while currIdx < msg.count - 1 { // 조건 한 번 확인 필요
+        // 한 글자는 무조건 잇음.
+        // 사전에 있는지 검사
+            // 있으면?: 글자 붙여야 됨. (없을 때 까지)
+            // 없으면?: next와 합쳐서 사전에 저장, result에 추가 -> currWord, next 구분 필요
+                // currWord 초기화도 필요
+        let next = msg[currIdx + 1]
         
-        if !dict.keys.contains(word + next) {
-            result.append(dict[word]!)
-            dict[word + next] = dict.count + 1
-            word = ""
+        if dict[currWord + next] == nil {
+            dict[currWord + next] = dict.count + 1
+            result.append(dict[currWord]!)
+            currWord = ""
         }
-        word += next
+
+        currWord += next
         currIdx += 1
     }
     
-    result.append(dict[word]!)
-
+    result.append(dict[currWord, default: 0])
     return result
 }
