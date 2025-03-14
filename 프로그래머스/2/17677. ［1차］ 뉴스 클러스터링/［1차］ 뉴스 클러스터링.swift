@@ -1,57 +1,48 @@
-/**
-자카드 유사도: 교집합 크기 / 합집합 크기
-단, 집합 A, B가 공집합일 경우에는 1로 정의
-
-다중집합일 경우 동일한 원소끼리의
-교집합은 min(A(a), B(a))
-합집합은 max(A(a), B(a))
-
-1. 두 문자열이 주어질 때, 두 글자씩 끊어서 다중집합 만들기
-2. 교집합 or 합집합 구하기 -> 합 = A + B - 교 이용해서 다른 하나 구하기
-3. 자카드 유사도 계산하기
-*/
+// 자카드 유사도: 교집합 크기 / 합집합 크기 -> 다중집합일 때 조심하기.
+// 교집합 크기, 합집합 크기를 구해야 됨.
+// A U B = n(A) + n(B) - n(A \ B)
+// 교집합과 합집합 중 구하기 쉬운거 구하고, 나머지는 위 식 이용해서 구하기
 func solution(_ str1:String, _ str2:String) -> Int {
-    let str1Set = parse(from: str1)
-    let str2Set = parse(from: str2)
-    let str1Dict = calculateExistCount(from: str1Set)
-    let str2Dict = calculateExistCount(from: str2Set)
+    let a = parse(str1)
+    let b = parse(str2)
+    let intersectionCount = getIntersection(a, b).count
+    let unionCount = a.count + b.count - intersectionCount
 
-    let intersectionSize = getIntersectionSize(str1Dict, str2Dict) 
-    let unionSize = str1Set.count + str2Set.count - intersectionSize
+    if unionCount == 0 {
+        return 65536
+    }
     
-    guard unionSize != 0 else { return 65536 }
-    let result = Int(Double(intersectionSize) / Double(unionSize) * 65536)
-    
-    return result
+    return Int((intersectionCount * 65536) / unionCount)
 }
 
-func parse(from str: String) -> [String] {
+func parse(_ str: String) -> [String] {
+    let str = str.map { String($0) }
     var result = [String]()
-    let str = Array(str.lowercased())
     
-    for i in 0..<(str.count - 1) {
-        guard str[i].isLetter && str[i + 1].isLetter else { continue }
-        let word = String(str[i...i + 1])
-        result.append(word)
+    for i in 0..<str.count - 1 {
+        guard Character(str[i]).isLetter && Character(str[i + 1]).isLetter else { continue }
+        let temp =  (str[i] + str[i + 1]).uppercased()
+        result.append(temp)
     }
-    
+
     return result
 }
 
-func calculateExistCount(from words: [String]) -> [String: Int] {
-    var result = [String: Int]()
+func getIntersection(_ a: [String], _ b: [String]) -> [String] {
+    var aDict = [String: Int]()
+    var bDict = [String: Int]()
+    var result = [String]()
     
-    for word in words {
-        result[word, default: 0] += 1
-    }
-    
-    return result
-}
+    a.forEach { aDict[$0, default: 0] += 1 }
+    b.forEach { bDict[$0, default: 0] += 1 }
 
-func getIntersectionSize(_ A: [String: Int], _ B: [String: Int]) -> Int {
-    var result = 0
-    for a in A.keys {
-        result += min(A[a]!, B[a, default: 0])
+    for key in aDict.keys {
+        if bDict[key] != nil {
+            let count = min(aDict[key]!, bDict[key]!)
+            for _ in 0..<count {
+                result.append(key)
+            }
+        }
     }
     
     return result
