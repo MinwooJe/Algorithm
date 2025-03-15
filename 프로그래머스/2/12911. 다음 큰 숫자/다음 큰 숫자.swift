@@ -1,24 +1,19 @@
 import Foundation
 
-/**
-var num = n
-var binaryN = String(n, radix: 2)
-loop
-    num += 1
-    if binaryN.filter { $0 == 1 } == String(n, radix: 2).filter { $0 == 1}
-*/
 func solution(_ n:Int) -> Int {
     var answer = 0
-    var num = n
-    let oneCountOfBinaryN = String(n, radix: 2).filter { $0 == "1"}
+    let oneCount = String(n, radix: 2).filter { $0 == "1" }.count
+    
+    var candidate = n + 1
     
     while true {
-        num += 1
-        if String(num, radix: 2).filter { $0 == "1"} == oneCountOfBinaryN {
-            answer = num
+        let binaryCandidate = String(candidate, radix: 2)
+        if binaryCandidate.filter { $0 == "1" }.count == oneCount {
+            answer = candidate
             break
         }
+        candidate += 1
     }
-
+    
     return answer
 }
