@@ -1,15 +1,16 @@
 import Foundation
 
-func solution(_ s:String) -> Int {
+func solution(_ s:String) -> Int{
+    var result = 0
     var stack = [Character]()
     
     for c in s {
-        stack.append(c)
-        if stack.count >= 2 && stack[stack.count - 1] == stack[stack.count - 2] {
+        if !stack.isEmpty && stack[stack.count - 1] == c {
             stack.removeLast()
-            stack.removeLast()
+        } else {
+            stack.append(c)
         }
     }
-
+    
     return stack.isEmpty ? 1 : 0
 }
