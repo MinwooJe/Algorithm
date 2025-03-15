@@ -1,51 +1,51 @@
 import Foundation
-
+// 튜플로 부분집합을 만들 수 있는데, 부분집합이 주어졌을 때 원래의 튜플 찾기
+// 튜플은 중복 원소 x, 5 <= s <= 1,000,000
+/**
+1. 파싱 -> 배열로 만들기
+2. 배열 개수 기준 오름차순 정렬
+3. set에 집어넣으면서 set에 없는것만 result에 담기
+*/
 func solution(_ s:String) -> [Int] {
-    let tupleSet = parse(s).sorted { $0.count < $1.count }
+    let sortedSubset = parse(s)
+    var visited = Set<Int>()
     var result = [Int]()
-    var resultSet = [Int]()     // 중복 검사를 빠르게 하기 위함.
     
-    for subset in tupleSet {
-        for s in subset {
-            if !resultSet.contains(s) {
-                result.append(s)
-                resultSet.append(s)
+    for subset in sortedSubset {
+        for num in subset {
+            if !visited.contains(num) {
+                result.append(num)
+                visited.insert(num)
             }
         }
     }
-
+    
     return result
 }
 
-func parse(_ str: String) -> [[Int]] {
+func parse(_ s: String) -> [[Int]] {
+    var s = Array(s.dropFirst().dropLast())
     var result = [[Int]]()
-    var num = ""
     var temp = [Int]()
-    var isOpenParthesis = false
-    let arr = Array(str)
+    var tempNum: String = ""
+    var isInner = true
 
-    for i in 1..<(arr.count - 1) {
-        let element = arr[i]
-
-        if element == "{" {
-            isOpenParthesis = true
-        } else if element == "}" {
-            if num.count > 0 {
-                temp.append(Int(String(num))!)
-                num = ""
-            } 
-            isOpenParthesis = false
+    for c in s {
+        if c == "{" {
+            isInner = true
+        } else if c.isNumber {
+            tempNum += String(c)
+        } else if c == "," && isInner {
+            temp.append(Int(tempNum)!)
+            tempNum = ""
+        } else if c == "}" {
+            temp.append(Int(tempNum)!)
             result.append(temp)
             temp = []
-        } else if element == "," {
-            if isOpenParthesis {
-                temp.append(Int(String(num))!)
-                num = ""
-            }
-        } else if element.isNumber {
-            num += String(element)
+            tempNum = ""
+            isInner = false
         }
     }
-
-    return result
+    
+    return result.sorted { $0.count < $1.count }
 }
