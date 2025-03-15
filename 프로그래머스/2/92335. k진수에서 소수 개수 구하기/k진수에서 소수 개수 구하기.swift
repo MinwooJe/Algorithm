@@ -1,24 +1,22 @@
 import Foundation
-
+// 조건에 맞는 수들 중 소수 찾기
+// 조건: 0 기준 split
+    // 소수 판별
 func solution(_ n:Int, _ k:Int) -> Int {
-    return String(n, radix: k)
-        .split(separator: "0")
-        .filter { isPrime(Int($0)!) }
-        .count
+    let arr = String(n, radix: k).split(separator: "0")
+    return arr.filter { isPrime(Int($0)!) }.count
 }
 
-func isPrime(_ n: Int) -> Bool {
-    guard n >= 2 else { return false }
+func isPrime(_ num: Int) -> Bool {
+    guard num > 1 else { return false }
 
-    let end = Int(sqrt(Double(n))) + 1
-    var result = true
-
+    let end = Int(sqrt(Double(num))) + 1
+    
     for i in 2..<end {
-        if n % i == 0 {
-            result = false
-            break
+        if num % i == 0 {
+            return false
         }
     }
     
-    return result
+    return true
 }
