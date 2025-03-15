@@ -3,35 +3,28 @@ import Foundation
 func solution(_ x:Int, _ y:Int, _ n:Int) -> Int {
     var memo = [Int: Int]()
     
-    func dp(_ k: Int) -> Int {
-        if k == x {
+    func dp(_ curr: Int) -> Int {
+        if curr == x {
             return 0
-        }
-        if k < x {
+        } else if curr < x {
             return -1
         }
         
-        if memo[k] == nil {
+        if memo[curr] == nil {
             var arr = [Int]()
-            arr.append(dp(k - n))
-            if k % 2 == 0 && k / 2 >= x {
-                arr.append(dp(k / 2))
-            }
-            if k % 3 == 0 && k / 3 >= x {
-                arr.append(dp(k / 3))
-            }
+            arr.append(dp(curr - n))
             
+            if curr % 2 == 0 && curr / 2 >= x {
+                arr.append(dp(curr / 2))
+            }
+            if curr % 3 == 0 && curr / 3 >= x {
+                arr.append(dp(curr / 3))
+            }
             arr = arr.filter { $0 >= 0 }
-            
-            if arr.count > 0 {
-                memo[k] = arr.min()! + 1
-            } else {
-                memo[k] = -1
-            }
-            
+            memo[curr] = arr.count > 0 ? arr.min()! + 1 : -1
         }
         
-        return memo[k]!
+        return memo[curr]!
     }
     
     return dp(y)
