@@ -1,31 +1,30 @@
 import Foundation
 
 func solution(_ x:Int, _ y:Int, _ n:Int) -> Int {
-    var memo = [Int: Int]()
+    var result = -1
+    var queue = [(Int, Int)]()
+    queue.append((y, 0))
     
-    func dp(_ curr: Int) -> Int {
-        if curr == x {
-            return 0
-        } else if curr < x {
-            return -1
+    var queueIdx = 0
+    while queueIdx < queue.count {
+        let (cur, count) = queue[queueIdx]
+        queueIdx += 1
+        
+        guard cur != x else { 
+            result = count
+            break
         }
         
-        if memo[curr] == nil {
-            var arr = [Int]()
-            arr.append(dp(curr - n))
-            
-            if curr % 2 == 0 && curr / 2 >= x {
-                arr.append(dp(curr / 2))
-            }
-            if curr % 3 == 0 && curr / 3 >= x {
-                arr.append(dp(curr / 3))
-            }
-            arr = arr.filter { $0 >= 0 }
-            memo[curr] = arr.count > 0 ? arr.min()! + 1 : -1
+        if cur - n >= x {
+            queue.append((cur - n, count + 1))
         }
-        
-        return memo[curr]!
+        if cur % 2 == 0 {
+            queue.append((cur / 2, count + 1))
+        }
+        if cur % 3 == 0 {
+            queue.append((cur / 3, count + 1))
+        }
     }
     
-    return dp(y)
+    return result
 }
