@@ -1,16 +1,21 @@
 import Foundation
-
+/**
+0. var x = s
+1. xs의 모든 0 제거
+2. String(len(s), radix: 2)
+*/
 func solution(_ s:String) -> [Int] {
-    var result = [0, 0]         // [이진 변환 횟수, 제거된 0의 개수]
-    var str = s
+    var x = s
+    var deletedZeroCount = 0
+    var result = 0
     
-    while str.count > 1 {
-        let zeroRemovedString = str.filter { $0 == "1" }
-        result[0] += 1
-        result[1] += str.count - zeroRemovedString.count
-        str = String(zeroRemovedString.count, radix: 2)
-
+    while x != "1" {
+        let deletedZero = x.filter { $0 != "0" }
+        deletedZeroCount += x.count - deletedZero.count
+        result += 1
+        
+        x = String(deletedZero.count, radix: 2)
     }
-
-    return result
+    
+    return [result, deletedZeroCount]
 }
