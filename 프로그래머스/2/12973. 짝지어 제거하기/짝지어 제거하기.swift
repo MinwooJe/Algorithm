@@ -1,7 +1,7 @@
 import Foundation
 
 func solution(_ s:String) -> Int{
-    var result = 0
+    var answer = 0
     var stack = [Character]()
     
     for c in s {
@@ -11,6 +11,6 @@ func solution(_ s:String) -> Int{
             stack.append(c)
         }
     }
-    
+
     return stack.isEmpty ? 1 : 0
 }
