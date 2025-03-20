@@ -1,71 +1,72 @@
-// Return: 지워진 블록이 표시된 새로운 보드, 지워진 블록의 존재 여부
-func markDeletedBlock(_ board: [[String]]) -> ([[String]], Int) {
-    var board = board
-    var deleted = Set<[Int]>()
+/**
+*/
+// m: 행 개수, n: 열 개수
+func solution(_ m:Int, _ n:Int, _ board:[String]) -> Int {
+    var result = 0
+    var newBoard = board.map { Array($0) }
 
-    for i in 0..<(board.count - 1) {
-        for j in 0..<(board[0].count - 1) {
-            let lu = board[i][j]
-            let ld = board[i + 1][j]
-            let ru = board[i][j + 1]
-            let rd = board[i + 1][j + 1]
-            if (lu != " ") && (lu == ld) && (ld == ru) && (ru == rd) {
-                deleted.insert([i, j])
-                deleted.insert([i + 1, j])
-                deleted.insert([i, j + 1])
-                deleted.insert([i + 1, j + 1])
-            }
-        }
+    while true {
+        let (deletedBoard, deletedCount) = markedAndDeleted(newBoard)
+        guard deletedCount != 0 else { break }
+        newBoard = reloadBoard(deletedBoard)
+        result += deletedCount
     }
     
-    for coordinate in deleted {
-        let (row, col) = (coordinate[0], coordinate[1])
-        board[row][col] = " "
-    }
-
-    return (board, deleted.count)
+    return result
 }
 
-func reloadBoard(_ board: [[String]]) -> [[String]] {
-    var board = board
-    var stack = [String]()
+func markedAndDeleted(_ board: [[Character]]) -> ([[Character]], Int) {
+    let (m, n) = (board.count, board[0].count)
+    var board = board.map { Array($0) }
+    var deleted = Set<[Int]>()
+    var deletedCount = 0
     
-    for col in 0..<board[0].count {
-        // 빈칸을 제외한 아이템 모으기
-        stack = []
-        for row in 0..<board.count {
-            if board[row][col] != " " {
-                stack.append(board[row][col])
+    for row in 0..<m - 1 {
+        for col in 0..<n - 1 {
+            let lu = board[row][col]
+            let ld = board[row + 1][col]
+            let ru = board[row][col + 1]
+            let rd = board[row + 1][col + 1]
+
+            if lu != " " && lu == ld && ld == ru && ru == rd {
+                deleted.insert([row, col])
+                deleted.insert([row + 1, col])
+                deleted.insert([row, col + 1])
+                deleted.insert([row + 1, col + 1])
             }
         }
-        
-        let itemCount = stack.count
-        let emptyCount = board.count - itemCount
+    }
+    deletedCount += deleted.count
 
-        // 빈 칸 채우기
+    // 삭제
+    for coord in deleted {
+        let (row, col) = (coord[0], coord[1])
+        board[row][col] = " "
+    }
+    
+    return (board, deletedCount)
+}
+
+func reloadBoard(_ board: [[Character]]) -> [[Character]] {
+    let (m, n) = (board.count, board[0].count)
+    var board = board
+    
+    for col in 0..<n {
+        var stack = [Character]()
+
+        for row in 0..<m {
+            if board[row][col] == " " { continue }
+            stack.append(board[row][col])
+        }
+
+        let emptyCount = m - stack.count
         for row in 0..<emptyCount {
             board[row][col] = " "
         }
-        // 아이템 채우기
-        for row in emptyCount..<board.count {
+        for row in emptyCount..<m {
             board[row][col] = stack[row - emptyCount]
         }
     }
-
+    
     return board
-}
-
-func solution(_ m:Int, _ n:Int, _ board:[String]) -> Int {
-    var board = board.map { Array($0).map { String($0) } }
-    var result = 0
-
-    while true {
-        let (markedBoard, deletedCount) = markDeletedBlock(board)
-        guard deletedCount != 0 else { break }
-        board = reloadBoard(markedBoard)
-        
-        result += deletedCount
-    }
-
-    return result
 }
