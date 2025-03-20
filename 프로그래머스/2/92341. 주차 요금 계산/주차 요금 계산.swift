@@ -1,74 +1,70 @@
 import Foundation
 /**
-1. 입차 후 출차내역 없으면, 23:59에 나간 것.
-2. 누적 시간이 기본 시간 이하 -> 기본 요금 청구
-3. 초과한 시간이 단위 시간으로 나누어떨어지지 않으면 올림
-4. 잘못된 입력 없음: 들어오지 않았는데 나가는 경우
+하루 동안의 누적 주차 시간 계산 -> 요금 일괄 정산
+누적 주차 시간 > 기본 시간 -> 기본 요금 + {1 + (누적 주차 시간 - 기본 시간 - 1) / 단위 시간} * 단위요금
+차량 번호가 작은 자동차부터 청구할 주차요금 리턴
 */
-
 /**
-[차량번호]
-[차량번호: 입차시간]
-[차량번호: 누적시간]
-
-records 순회 
-    IN -> 입차시간 초기화
-    OUT -> 딕셔너리 이용해 시간 계산 -> 누적시간 딕셔너리 갱신 -> 입차 딕셔너리 nil
-함수: 파싱, 금액 판단
+자료구조
+1. enteredTime = [String: Int] = [차량번호: 입차시간]
+-> records 순회하며 파싱 -> isIn == true 이면 여기에 저장, false면 꺼내서 total에 저장
+2. totalTime = [String: Int] = [차량번호: 누적시간]
+로직
+totalTime을 다 구한 후 for carNum in totakTime.keys: 
+함수
+1. HH:MM -> 분으로 바꾸는 함수
+2. records 파싱 함수 -> 분, 번호, isIn: Bool 반환
+3. total 시간을 금액으로 바꾸는 함수
 */
-
-// 차량 번호가 작은 자동차부터 청구할 요금 return
-// fees: [기본 시간, 기본 요금, 단위 시간, 단위 요금]
+/// fees = [기본 시간, 기본 요금, 단위 시간, 단위 요금]
+/// records = "시각 차량번효 내역"
 func solution(_ fees:[Int], _ records:[String]) -> [Int] {
-    var inTimeDict = [String: Int]()
-    var totalTimeDict = [String: Int]()
-    var result = [Int]()
+    var enteredTime = [String: Int]()
+    var totalTime = [String: Int]()
     
     for record in records {
-        let (time, car, isIn) = parse(record)
+        let (time, carNum, isIn) = parseRecord(record)
+        
         if isIn {
-            inTimeDict[car] = time
+            enteredTime[carNum] = time
         } else {
-            let duringTime = time - inTimeDict[car]!
-            totalTimeDict[car, default: 0] += duringTime
-            inTimeDict[car] = nil
+            totalTime[carNum, default: 0] += time - enteredTime[carNum]! 
+            enteredTime[carNum] = nil
         }
     }
-
-    for (car, inTime) in inTimeDict {
-        totalTimeDict[car, default: 0] += parseToTime("23:59") - inTime
-    }
-
-    for car in totalTimeDict.keys.sorted() {
-        let totalTime = totalTimeDict[car]!
-        result.append(calculateFee(totalTime, fees))
+    
+    for (carNum, time) in enteredTime {
+        totalTime[carNum, default: 0] += 1439 - enteredTime[carNum]!
     }
     
-    return result
+    print(totalTime)
+    return totalTime.keys.sorted().map { convertToFee(totalTime[$0]!, fees) }
 }
 
-func parse(_ str: String) -> (time: Int, car: String, isIn: Bool) {
-    let components = str.components(separatedBy: " ")
-    let (time, car, enter) = (components[0], components[1], components[2])
-    
-    return (parseToTime(time), car, enter == "IN")
-}
-
-func parseToTime(_ time: String) -> Int {
-    let components = time.components(separatedBy: ":")
-    let (hour, minute) = (Int(components[0])!, Int(components[1])!)
+func parseToMinute(_ time: String) -> Int {
+    let components = time.components(separatedBy: ":").map { Int($0)! }
+    let (hour, minute) = (components[0], components[1])
     
     return hour * 60 + minute
 }
 
-// fees: [기본 시간, 기본 요금, 단위 시간, 단위 요금]
-func calculateFee(_ time: Int, _ fees: [Int]) -> Int {
-    var fee = fees[1]
+func parseRecord(_ record: String) -> (Int, String, Bool) {
+    let components = record.components(separatedBy: " ")
+    let time = parseToMinute(components[0])
+    let carNum = components[1]
+    let isIn = components[2] == "IN" ? true : false
     
-    if time > fees[0] {
-        let additionalTime = (time - fees[0])
-        fee += fees[3] * ((additionalTime - 1) / fees[2] + 1)
+    return (time, carNum, isIn)
+}
+
+/// fees = [기본 시간, 기본 요금, 단위 시간, 단위 요금]
+func convertToFee(_ time: Int, _ fees: [Int]) -> Int {
+    if time <= fees[0] {
+        return fees[1]
+    } else {
+        let overTime = time - fees[0]
+        let overUnit = 1 + (overTime - 1) / fees[2]
+        let totalFee = overUnit * fees[3] + fees[1]
+        return totalFee
     }
-    
-    return fee
 }
