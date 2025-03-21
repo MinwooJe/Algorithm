@@ -1,41 +1,42 @@
 import Foundation
-/**
-bfs로 가다가 curr == target이 되는 첫 순간 return 해주면 됨.
-visited가 있으면 좋지만, bfs만으로 풀기 위해서는 없어야 함.
-각 레벨의 노드(단어)마다 방문한게 달라서.
-words의 최대 길이가 50이라 visited 없어도 시간상 괜찮
-*/
+
 func solution(_ begin:String, _ target:String, _ words:[String]) -> Int {
-    guard words.contains(target) else { return 0 }
+    var result = 0
+    var queue = [(String, Int, [String])]()
     
-    var queue = [(curWord: String, level: Int)]()
-    queue.append((begin, 0))
-    
+    queue.append((begin, 0, [begin]))
     var queueIdx = 0
-    while !queue.isEmpty {
-        let (curWord, curLevel) = queue[queueIdx]
+    while queueIdx < queue.count {
+        let (cur, count, visited) = queue[queueIdx]
         queueIdx += 1
         
-        let nextWords = words.filter { isConvertable(curWord, $0) }
-        for nextWord in nextWords {
-            if nextWord == target {
-                return curLevel + 1
-            } else {
-                queue.append((nextWord, curLevel + 1))
+        if cur == target {
+            result = count
+            break
+        }
+        
+        let nextWords = words.filter { 
+            return isConvertable(cur, $0) && !visited.contains($0)
+        }
+        nextWords.forEach { queue.append(($0, count + 1, visited + [$0])) }
+    }
+    
+    return result
+}
+
+func isConvertable(_ word: String, _ target: String) -> Bool {
+    let word = Array(word)
+    let target = Array(target)
+    var diff = 0
+    
+    for (w, t) in zip(word, target) {
+        if w != t {
+            diff += 1
+            if diff > 1 {
+                return false
             }
         }
     }
     
-    return 0
-}
-
-func isConvertable(_ myWord: String, _ target: String) -> Bool {
-    let (myWord, target) = (Array(myWord), Array(target))
-    var diffCount = 0
-    
-    for (w, t) in zip(myWord, target) {
-        diffCount += w != t ? 1 : 0
-    }
-    
-    return diffCount == 1 ? true : false
+    return true
 }
