@@ -1,34 +1,20 @@
 import Foundation
 
 func solution(_ progresses:[Int], _ speeds:[Int]) -> [Int] {
+    let remainProgress = progresses.map { 100 - $0 }
+    var remainDays = zip(remainProgress, speeds).map { (($0 - 1) / $1) + 1}
     var result = [Int]()
-    var queue = [Int]()     // 남은 작업 일자
     
-    for (p, s) in zip(progresses, speeds) {
-        let remain: Int
-        if (100 - p) % s == 0 {
-            remain = (100 - p) / s
-        } else {
-            remain = (100 - p) / s + 1
-        }
-        queue.append(remain)
-    }
-
-    while !queue.isEmpty {
-        let finishedTask = queue.removeFirst()
-        var finishedCount = 1
+    while !remainDays.isEmpty {
+        let todayTask = remainDays.removeFirst()
+        var todayDone = 1
         
-        while true {
-            guard !queue.isEmpty else { break }
-            if finishedTask >= queue[0] {
-                queue.removeFirst()
-                finishedCount += 1
-            } else {
-                break
-            }
+        while !remainDays.isEmpty && todayTask >= remainDays[0] {
+            todayDone += 1
+            remainDays.removeFirst()
         }
-        result.append(finishedCount)
+        result.append(todayDone)
     }
-
+    
     return result
 }
