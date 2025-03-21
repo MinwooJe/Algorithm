@@ -1,24 +1,35 @@
 import Foundation
-
-// queue.pop == 실행
+/**
+priorities[location]이 몇 번째로 실행되는지?
+*/
+// location: 1-based
 func solution(_ priorities:[Int], _ location:Int) -> Int {
-    var queue = [(Int, Int)]()  // (프로세스 인덱스, 우선순위)
+    var queue = zip((0..<priorities.count), priorities).map { (idx: $0, p: $1) }
     var result = 0
-    for i in 0..<priorities.count {
-        queue.append((i, priorities[i]))
-    }
-
-    while true {
-        let process = queue.removeFirst()
-        if queue.filter { $0.1 > process.1 }.count > 0 {    // 우선순위 안됨.
-            queue.append(process)
-        } else {
-            result += 1
-            if process.0 == location {  // 우선순위 조건 충족 -> 실행
-                break
+    
+    // var queueIdx = 0
+    while !queue.isEmpty {
+        let (curIdx, curProcess) = queue.removeFirst()
+        // queueIdx += 1
+        
+        // curProcess 보다 우선순위 높은게 있는지 확인
+        var isCurrMax = true
+        for (_, process) in queue {
+            if curProcess < process {
+                isCurrMax = false
             }
         }
+        
+        if isCurrMax {
+            result += 1
+            if curIdx == location {
+                break
+            } 
+        } else {
+            queue.append((curIdx, curProcess))
+        }
+        
     }
-
+    
     return result
 }
