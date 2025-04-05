@@ -1,20 +1,16 @@
 import Foundation
 
 func solution(_ numbers:[Int]) -> [Int] {
-    var stack = [(value: Int, idx: Int)]()
-    var result = Array(repeating: 0, count: numbers.count)
+    var stack = [(idx: Int, num: Int)]()
+    var result = Array(repeating: -1, count: numbers.count)
     
-    for (idx, num) in numbers.enumerated() {
-        while !stack.isEmpty && stack[stack.count - 1].value < num {
-            let (_, idx) = stack.removeLast()
-            result[idx] = num
-        }
-        stack.append((num, idx))
-    }
-    
-    while !stack.isEmpty {
-        let (_, idx) = stack.removeLast()
-        result[idx] = -1
+    for i in 0..<numbers.count {
+        while !stack.isEmpty && stack[stack.count - 1].num < numbers[i] {
+            let idx = stack.removeLast().idx
+            result[idx] = numbers[i]
+        } 
+        
+        stack.append((i, numbers[i]))
     }
     
     return result
