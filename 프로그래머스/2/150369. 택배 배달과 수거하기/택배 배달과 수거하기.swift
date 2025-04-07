@@ -1,46 +1,53 @@
 import Foundation
+/**
+[1, 0, 3, 1, 2]
+[0, 3, 0, 4, 0]
 
+한 번 나간김에 배달, 픽업 최대한 하는게 좋음 -> 그리디하게 배달하기
+가장 먼 곳 부터 배달.
+*/
+/// cap: 트럭 용량, n: 배달할 집의 개수, delevieries: 배달해야 될 집, pickups: 픽업할 곳
 func solution(_ cap:Int, _ n:Int, _ deliveries:[Int], _ pickups:[Int]) -> Int64 {
     var d = deliveries
     var p = pickups
-    var count = 0
-
+    var distance: Int64 = 0
+    
     while let last = d.last, last == 0 {
         d.removeLast()
     }
-
+    
     while let last = p.last, last == 0 {
         p.removeLast()
     }
-
+    
     while !d.isEmpty || !p.isEmpty {
-        var currDeliveryCap = cap
-        var currPickupCap = 0
-
-        count += max(d.count, p.count) * 2
+        distance += Int64(max(d.count, p.count)) * 2
+        // 배달
+        var currParcel = cap
         while !d.isEmpty {
-            // 현재 택배가 부족해서 해당 집에게 필요한 택배 배달 불가
-            if currDeliveryCap < d[d.count - 1] {
-                d[d.count - 1] -= currDeliveryCap
-                currDeliveryCap = 0
-                break
+            let lastIdx = d.count - 1
+            if currParcel >= d[lastIdx] {
+                currParcel -= d[lastIdx]
+                d.removeLast()
             } else {
-                currDeliveryCap -= d.removeLast()
+                d[lastIdx] -= currParcel
+                break
             }
         }
 
+        // 픽업
+        var currCap = 0
         while !p.isEmpty {
-            // 트럭이 꽉 차서 수거 불가능
-            if currPickupCap + p.last! > cap {
-                p[p.count - 1] -= cap - currPickupCap
-                currPickupCap = cap
-                break
+            let lastIdx = p.count - 1
+            if currCap + p[lastIdx] <= cap {
+                currCap += p[lastIdx]
+                p.removeLast()
             } else {
-                currPickupCap += p.removeLast()
+                p[lastIdx] -= (cap - currCap)
+                break
             }
         }
     }
-
     
-    return Int64(count)
+    return Int64(distance)
 }
