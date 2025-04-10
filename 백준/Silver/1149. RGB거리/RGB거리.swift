@@ -1,18 +1,18 @@
 let n = Int(readLine()!)!
-var costMap = [[Int]]()
-var dpTable = Array(repeating: Array(repeating: 0, count: 3), count: n + 1)
+var arr = [[Int]]()
+var memo = Array(repeating: Array(repeating: 0, count: 3), count: n)
 
 for _ in 0..<n {
-    let inputLine = readLine()!.split(separator: " ").map { Int($0)! }
-    costMap.append(inputLine)
+    let input = readLine()!.split(separator: " ").map { Int($0)! }
+    arr.append(input)
 }
 
-dpTable[1] = costMap[0]
+memo[0] = arr[0]
 
-for i in 2...n {
-    dpTable[i][0] = min(dpTable[i - 1][1], dpTable[i - 1][2]) + costMap[i - 1][0]
-    dpTable[i][1] = min(dpTable[i - 1][0], dpTable[i - 1][2]) + costMap[i - 1][1]
-    dpTable[i][2] = min(dpTable[i - 1][0], dpTable[i - 1][1]) + costMap[i - 1][2]
+for i in 1..<n {
+    memo[i][0] = arr[i][0] + min(memo[i - 1][1], memo[i - 1][2])
+    memo[i][1] = arr[i][1] + min(memo[i - 1][0], memo[i - 1][2])
+    memo[i][2] = arr[i][2] + min(memo[i - 1][0], memo[i - 1][1])
 }
 
-print(dpTable[n].min()!)
+print(memo[n - 1].min()!)
