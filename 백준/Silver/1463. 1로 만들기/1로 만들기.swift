@@ -1,26 +1,23 @@
 let n = Int(readLine()!)!
-var table = Array(repeating: 0, count: n + 1)
+var memo = Array(repeating: 1000001, count: n + 1)
 
 if n == 1 {
     print(0)
-} else if n == 2 {
-    print(1)
-} else if n == 3 {
+} else if n == 2 || n == 3 {
     print(1)
 } else {
-    if n < 3 {
-        print(table[n])
-    }
-    
-    for i in 2...n {
-        table[i] = table[i - 1] + 1
+    (memo[1], memo[2], memo[3]) = (0, 1, 1)
+
+    for i in 4...n {
+        memo[i] = memo[i - 1] + 1
+        
         if i % 2 == 0 {
-            table[i] = min(table[i], table[i / 2] + 1)
+            memo[i] = min(memo[i], memo[i / 2] + 1)
         }
         if i % 3 == 0 {
-            table[i] = min(table[i], table[i / 3] + 1)
+            memo[i] = min(memo[i], memo[i / 3] + 1)
         }
     }
-    
-    print(table[n])
+
+    print(memo[n])
 }
