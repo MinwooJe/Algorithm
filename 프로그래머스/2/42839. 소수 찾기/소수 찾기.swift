@@ -1,13 +1,13 @@
 import Foundation
 
 func solution(_ numbers:String) -> Int {
-    var numbers = Array(numbers)
+    let numbers = Array(numbers)
     var result = Set<Int>()
-
+    
     func bruteforce(_ curr: [Int]) {
         var num = ""
-        for i in curr {
-            num += String(numbers[i])
+        for i in 0..<curr.count {
+            num += String(numbers[curr[i]])
         }
         
         if num != "" && isPrime(Int(num)!) {
@@ -20,14 +20,14 @@ func solution(_ numbers:String) -> Int {
             }
         }
     }
-    
+
     bruteforce([])
-    
+
     return result.count
 }
 
 func isPrime(_ num: Int) -> Bool {
-    guard num >= 2 else { return false }
+    guard num > 1 else { return false }
 
     let end = Int(sqrt(Double(num))) + 1
     
