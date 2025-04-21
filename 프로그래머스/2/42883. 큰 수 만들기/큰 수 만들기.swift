@@ -1,24 +1,23 @@
 import Foundation
-
+/**
+최대한 앞의 가장 작은 수들을 없애는게 좋음.
+*/
 func solution(_ number:String, _ k:Int) -> String {
-    let number = Array(number)
     var stack = [Character]()
     var deletedCount = 0
-
-    for i in 0..<number.count {
-        let curr = number[i]
-        
-        while deletedCount < k && !stack.isEmpty && stack[stack.count - 1] < curr {
+    
+    for num in number {
+        while !stack.isEmpty && stack[stack.count - 1] < num && deletedCount < k {
             stack.removeLast()
             deletedCount += 1
         }
-        stack.append(curr)
+
+        stack.append(num)
     }
     
-    while deletedCount < k {
+    while stack.count > number.count - k {
         stack.removeLast()
-        deletedCount += 1
     }
-
+    
     return String(stack)
 }
