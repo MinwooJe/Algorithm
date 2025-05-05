@@ -10,7 +10,7 @@ for _ in 0..<boardLength {
     board.append(input)
 }
 
-func getArea(_ board: [[Character]]) -> Int {
+func getArea() -> Int {
     var areaCount = 0
     visited = Array(repeating: Array(repeating: false, count: boardLength), count: boardLength)
     for row in 0..<boardLength {
@@ -52,7 +52,7 @@ func bfs(_ row: Int, _ col: Int) {
 }
 
 func main() {
-    let normalCount = getArea(board)
+    let normalCount = getArea()
     
     for row in 0..<boardLength {
         for col in 0..<boardLength {
@@ -62,7 +62,7 @@ func main() {
         }
     }
     
-    let colorBlindCount = getArea(board)
+    let colorBlindCount = getArea()
     
     print(normalCount, colorBlindCount)
 }
