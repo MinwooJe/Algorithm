@@ -1,70 +1,64 @@
-let boardLength = Int(readLine()!)!
+let boardLen = Int(readLine()!)!
 let dRow = [-1, 1, 0, 0]
 let dCol = [0, 0, -1, 1]
 
 var board = [[Character]]()
-var visited = Array(repeating: Array(repeating: false, count: boardLength), count: boardLength)
 
-for _ in 0..<boardLength {
+for _ in 0..<boardLen {
     let input = readLine()!.map { $0 }
     board.append(input)
 }
 
+let normalCount = getArea()
+
+for row in 0..<boardLen {
+    for col in 0..<boardLen {
+        if board[row][col] == "R" {
+            board[row][col] = "G"
+        }
+    }
+}
+
+let blindCount = getArea()
+
+print(normalCount, blindCount)
+
 func getArea() -> Int {
-    var areaCount = 0
-    visited = Array(repeating: Array(repeating: false, count: boardLength), count: boardLength)
-    for row in 0..<boardLength {
-        for col in 0..<boardLength {
-            // 방문안했으면 bfs 호출. bfs에서 색 판단
+    var visited = Array(repeating: Array(repeating: false, count: boardLen), count: boardLen)
+    var area = 0
+
+    for row in 0..<boardLen {
+        for col in 0..<boardLen {
             guard !visited[row][col] else { continue }
             bfs(row, col)
-            areaCount += 1
+            area += 1
         }
     }
     
-    return areaCount
-}
-
-func bfs(_ row: Int, _ col: Int) {
-    let color = board[row][col]
-    
-    var queue = [(Int, Int)]()
-    var queueIdx = 0
-    
-    queue.append((row, col))
-    visited[row][col] = true
-    
-    while queueIdx < queue.count {
-        let (curRow, curCol) = queue[queueIdx]
-        queueIdx += 1
+    func bfs(_ row: Int, _ col: Int) {
+        let curColor = board[row][col]
         
-        for i in 0..<4 {
-            let nextRow = curRow + dRow[i]
-            let nextCol = curCol + dCol[i]
+        var queue = [(Int, Int)]()
+        var queueIdx = 0
+        
+        queue.append((row, col))
+        visited[row][col] = true
+        
+        while queueIdx < queue.count {
+            let (curRow, curCol) = queue[queueIdx]
+            queueIdx += 1
             
-            guard nextRow >= 0 && nextRow < boardLength && nextCol >= 0 && nextCol < boardLength else { continue }
-            guard !visited[nextRow][nextCol] && board[nextRow][nextCol] == color else { continue }
-            
-            queue.append((nextRow, nextCol))
-            visited[nextRow][nextCol] = true
-        }
-    }
-}
-
-func main() {
-    let normalCount = getArea()
-    
-    for row in 0..<boardLength {
-        for col in 0..<boardLength {
-            if board[row][col] == "G" {
-                board[row][col] = "R"
+            for i in 0..<4 {
+                let nextRow = curRow + dRow[i]
+                let nextCol = curCol + dCol[i]
+                
+                guard nextRow >= 0 && nextRow < boardLen && nextCol >= 0 && nextCol < boardLen else { continue }
+                guard !visited[nextRow][nextCol] && board[nextRow][nextCol] == curColor else { continue }
+                queue.append((nextRow, nextCol))
+                visited[nextRow][nextCol] = true
             }
         }
     }
     
-    let colorBlindCount = getArea()
-    
-    print(normalCount, colorBlindCount)
+    return area
 }
-
-main()
