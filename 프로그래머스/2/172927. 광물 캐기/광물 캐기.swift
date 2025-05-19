@@ -9,7 +9,7 @@ func solution(_ picks:[Int], _ minerals:[String]) -> Int {
     ]
     
     func bruteforce(_ picks: [Int], _ idx: Int, _ cost: Int) {
-        if idx == picks.count || picks.reduce(0, +) == 0 {
+        if idx == minerals.count || picks.reduce(0, +) == 0 {
             result = min(result, cost)
             return
         }
