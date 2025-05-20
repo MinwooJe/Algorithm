@@ -2,29 +2,33 @@ import Foundation
 
 func solution(_ arr:[[Int]]) -> [Int] {
     var (zeroCount, oneCount) = (0, 0)
-
-    func bruteforce(_ arr: [[Int]], _ startRow: Int, _ startCol: Int, _ length: Int) {
-        let element = arr[startRow][startCol]
-
-        for row in startRow..<startRow + length {
-            for col in startCol..<startCol + length {
-                if arr[row][col] != element {
-                    bruteforce(arr, startRow, startCol, length / 2)
-                    bruteforce(arr, startRow, startCol + length / 2, length / 2)
-                    bruteforce(arr, startRow + length / 2, startCol, length / 2)
-                    bruteforce(arr, startRow + length / 2, startCol + length / 2, length / 2)
-                    return
+    
+    func divideOrCount(_ len: Int, _ baseRow: Int, _ baseCol: Int) {
+        let element = arr[baseRow][baseCol]
+        
+        // 모든 수가 같은지 확인
+        for row in baseRow..<baseRow + len {
+            for col in baseCol..<baseCol + len {
+                if arr[row][col] != element {   // 다른 수가 나온다면 4등분
+                    let nextLen = len / 2
+                    divideOrCount(nextLen, baseRow, baseCol)
+                    divideOrCount(nextLen, baseRow, baseCol + nextLen)
+                    divideOrCount(nextLen, baseRow + nextLen, baseCol)
+                    divideOrCount(nextLen, baseRow + nextLen, baseCol + nextLen)
+                    return       // 해당 영역의 모든 수가 같지 않으니 더 이상 볼 것도 없이 등분하고 끗.
                 }
             }
         }
         
-        if element == 1 {
-            oneCount += 1
-        } else {
+        // 해당 영역의 모든 수가 같을 때만 실행됨.
+        if element == 0 {
             zeroCount += 1
+        } else {
+            oneCount += 1
         }
     }
     
-    bruteforce(arr, 0, 0, arr.count)
+    divideOrCount(arr.count, 0, 0)
+
     return [zeroCount, oneCount]
 }
