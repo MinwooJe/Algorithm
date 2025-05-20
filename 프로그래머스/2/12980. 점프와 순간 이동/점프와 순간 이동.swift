@@ -1,17 +1,22 @@
 import Foundation
 
-func solution(_ n:Int) -> Int {
-    var answer = 0
-    var n = n
+/**
+k 칸 점프 -> k 만큼 건전지 사용.
+순간이동: 현재까지 온 거리 * 2 -> 공짜
+*/
 
-    while n > 0 {
-        if n % 2 == 0 {
-            n /= 2
+func solution(_ n:Int) -> Int {
+    var position = n
+    var result = 0
+
+    while position > 0 {
+        if position % 2 == 0 {
+            position /= 2
         } else {
-            n -= 1
-            answer += 1
+            position -= 1
+            result += 1
         }
     }
-
-    return answer
+    
+    return result
 }
