@@ -1,14 +1,13 @@
 import Foundation
 
 func solution(_ A:[Int], _ B:[Int]) -> Int {
-    var ans = 0
-
-    let A = A.sorted(by: >)
-    let B = B.sorted(by: <)
+    let sortedA = A.sorted()
+    let sortedB = B.sorted(by: >)
+    var result = 0
     
-    for (a, b) in zip(A, B) {
-        ans += a * b
+    for (a, b) in zip(sortedA, sortedB) {
+        result += a * b
     }
 
-    return ans
+    return result
 }
