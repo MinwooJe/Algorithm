@@ -1,14 +1,16 @@
-func solution(_ elements:[Int]) -> Int {
-    let seq = elements + elements
-    var sum = Set<Int>()
+import Foundation
 
-    for i in 0..<elements.count {
-        var tempSum = 0
-        for j in i..<i + elements.count {
-            tempSum += seq[j]
-            sum.insert(tempSum)
+func solution(_ elements:[Int]) -> Int {
+    let doubled = elements + elements
+    var visited = Set<Int>()
+    
+    for base in 1...elements.count {
+        var sum = 0
+        for i in base..<base + elements.count {
+            sum += doubled[i]
+            visited.insert(sum)
         }
     }
-    
-    return sum.count
+
+    return visited.count
 }
