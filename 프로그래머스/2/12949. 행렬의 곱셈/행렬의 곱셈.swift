@@ -1,20 +1,19 @@
 import Foundation
 
 func solution(_ arr1:[[Int]], _ arr2:[[Int]]) -> [[Int]] {
-    let rowCount = arr1.count
-    let colCount = arr2[0].count
-    var result = Array(repeating: Array(repeating: 0, count: colCount), count: rowCount)
+    var result = [[Int]]()
     
-    for i in 0..<rowCount {
-        for j in 0..<colCount {
+    for r in 0..<arr1.count {
+        var tempArr = [Int]()
+        for c in 0..<arr2[0].count {
             var tempSum = 0
-            for k in 0..<arr2.count {
-                tempSum += arr1[i][k] * arr2[k][j]
+            for i in 0..<arr2.count {
+                tempSum += arr1[r][i] * arr2[i][c]
             }
-            result[i][j] = tempSum
+            tempArr.append(tempSum)
         }
+        result.append(tempArr)
     }
-
     
     return result
 }
