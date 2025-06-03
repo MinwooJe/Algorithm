@@ -46,14 +46,11 @@ func solution(_ N:Int, _ number:Int) -> Int {
             numbers = numbers.union(operate(arr[left - 1], arr[right - 1]))
         }
         
-        arr[repeating - 1] = arr[repeating - 1].union(numbers)
-    }
-
-
-    for i in 0..<arr.count {
-        if arr[i].contains(number) {
-            return i + 1
+        if numbers.contains(number) {
+            return repeating
         }
+        
+        arr[repeating - 1] = arr[repeating - 1].union(numbers)
     }
 
     return -1
