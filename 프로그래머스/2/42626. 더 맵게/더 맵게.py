@@ -14,9 +14,8 @@ def solution(scoville, K):
         hq.heappush(scoville, mixed)
         result += 1
         
-    if scoville and hq.heappop(scoville) >= K:
+    if hq.heappop(scoville) >= K:
         return result
     else:
         return -1
-        
         
