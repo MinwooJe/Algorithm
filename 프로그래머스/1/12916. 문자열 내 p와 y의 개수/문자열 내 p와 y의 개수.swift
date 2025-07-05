@@ -1,5 +1,18 @@
 import Foundation
 
 func solution(_ s:String) -> Bool {
-    return s.filter { $0 == "p" || $0 == "P"}.count == s.filter { $0 == "y" || $0 == "Y"}.count
+    var pCount = 0
+    var yCount = 0
+
+    for c in s.lowercased() {
+        if c == "p" {
+            pCount += 1
+        } else if c == "y" {
+            yCount += 1
+        } else {
+            continue
+        }
+    }
+    
+    return pCount == yCount
 }
